@@ -1,22 +1,19 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
+# Gradle
+.gradle/
+build/
 
-# idea
-out
-*.ipr
-*.iws
+# Forge Gradle
+run/
+
+# InteliJ
+.idea/**/dictionaries
+.idea/**/libraries
+.idea/**/gradle.xml
+.idea/**/tasks.xml
+.idea/**/workspace.xml
+out/
 *.iml
-.idea
 
-# gradle
-build
-.gradle
-
-# other
-eclipse
-run
+# Visual Studio Code
+.history/
+src/main/resources/assets/divergentunderground/
