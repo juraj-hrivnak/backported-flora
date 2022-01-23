@@ -1,7 +1,6 @@
 package azmalent.backportedflora.common.block
 
 import azmalent.backportedflora.BackportedFlora
-import azmalent.backportedflora.client.ModSoundTypes
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.MapColor

@@ -3,7 +3,6 @@ package azmalent.backportedflora.common.event
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.entity.boss.EntityWither
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
 import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.entity.living.LivingDeathEvent

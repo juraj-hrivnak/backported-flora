@@ -2,11 +2,7 @@ package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
-import azmalent.backportedflora.common.registry.ModBlocks
-import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
-import net.minecraft.block.IGrowable
-import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
@@ -20,7 +16,6 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 import net.minecraftforge.common.BiomeDictionary
-import net.minecraftforge.common.EnumPlantType
 import java.util.*
 import kotlin.math.min
 
@@ -73,15 +68,24 @@ class BlockKelp : AbstractSeaweed(NAME) {
         return defaultState.withProperty(AGE, age)
     }
 
-
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.material != Material.WATER) return false
+        if (up.block.registryName
+            !== Blocks.WATER.registryName
+            && up.block.registryName !== this.registryName) {
+            return false
+        }
 
-        //Must have kelp or valid soil below
+
+        //Must have a SINGLE Rivergrass or valid soil below
         val down = worldIn.getBlockState(pos.down())
-        return down.block == this || down.material in ALLOWED_SOILS
+        val down2 = worldIn.getBlockState(pos.down(2))
+        if (down.block == this) {
+            return down2.block != this
+        }
+
+        return down.material in ALLOWED_SOILS || (down.block == this && down2.material in ALLOWED_SOILS)
     }
 
     override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {

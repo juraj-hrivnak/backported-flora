@@ -5,7 +5,7 @@ import net.minecraft.init.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.world.World
-import java.util.Random
+import java.util.*
 
 class WorldGenNetherFlowers(flower: AbstractFlower) : WorldGenCustomFlowers(flower) {
     override fun getGenerationPos(world: World, rand: Random, chunkPos: ChunkPos): BlockPos {

@@ -2,20 +2,26 @@ package azmalent.backportedflora.common.registry
 
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.BlockDriedKelp
+import azmalent.backportedflora.common.block.flower.BlockCornflower
+import azmalent.backportedflora.common.block.flower.BlockLilyOfTheValley
+import azmalent.backportedflora.common.block.flower.BlockWitherRose
+import azmalent.backportedflora.common.block.freshwaterweed.BlockRivergrass
 import azmalent.backportedflora.common.block.seaweed.BlockKelp
-import azmalent.backportedflora.common.block.flower.*
 import azmalent.backportedflora.common.block.seaweed.BlockSeagrass
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
-import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.registries.IForgeRegistry
 
 object ModBlocks {
     @ObjectHolder(BlockSeagrass.REGISTRY_NAME)
     lateinit var SEAGRASS: BlockSeagrass
+
+    @ObjectHolder(BlockRivergrass.REGISTRY_NAME)
+    lateinit var RIVERGRASS: BlockRivergrass
 
     @ObjectHolder(BlockKelp.REGISTRY_NAME)
     lateinit var KELP: BlockKelp
@@ -34,6 +40,11 @@ object ModBlocks {
 
     fun register(registry: IForgeRegistry<Block>) {
         if (ModConfig.Seagrass.enabled) registry.register(BlockSeagrass())
+
+        if (Loader.isModLoaded("simpledifficulty")) {
+            registry.register(BlockRivergrass())
+        }
+
         if (ModConfig.Kelp.enabled) {
             registry.register(BlockKelp())
             if (ModConfig.Kelp.driedKelpEnabled) {
@@ -48,6 +59,11 @@ object ModBlocks {
 
     fun registerItemBlocks(registry: IForgeRegistry<Item>) {
         if (ModConfig.Seagrass.enabled) registry.register(SEAGRASS.createItemBlock())
+
+        if (Loader.isModLoaded("simpledifficulty")) {
+            registry.register(RIVERGRASS.createItemBlock())
+        }
+
         if (ModConfig.Kelp.enabled) {
             registry.register(KELP.createItemBlock())
             if (ModConfig.Kelp.driedKelpEnabled) {
@@ -63,6 +79,11 @@ object ModBlocks {
     @SideOnly(Side.CLIENT)
     fun registerModels() {
         if (ModConfig.Seagrass.enabled) SEAGRASS.registerItemModel()
+
+        if (Loader.isModLoaded("simpledifficulty")) {
+            RIVERGRASS.registerItemModel()
+        }
+
         if (ModConfig.Kelp.enabled) {
             KELP.registerItemModel()
             if (ModConfig.Kelp.driedKelpEnabled) {

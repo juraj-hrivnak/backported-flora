@@ -1,7 +1,7 @@
 package azmalent.backportedflora.common.block.flower
 
-import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.BackportedFlora
+import azmalent.backportedflora.ModConfig
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase

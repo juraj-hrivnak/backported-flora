@@ -5,6 +5,7 @@ item.kelp_soup.name=Kelp Soup
 item.dried_kelp.name=Dried Kelp
 
 # Plants
+tile.rivergrass.name=Rivergrass
 tile.seagrass.name=Seagrass
 tile.kelp.name=Kelp
 tile.lily_of_the_valley.name=Lily of the Valley
