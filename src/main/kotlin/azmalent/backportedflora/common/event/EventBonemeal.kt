@@ -5,6 +5,7 @@ import azmalent.backportedflora.common.block.flower.AbstractFlower
 import azmalent.backportedflora.common.block.seaweed.AbstractSeaweed
 import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.init.Blocks
 import net.minecraft.util.ResourceLocation
@@ -21,10 +22,6 @@ object EventBonemeal {
     private const val FLOWER_GENERATION_ATTEMPTS = 4
     private const val SEAGRASS_GENERATION_ATTEMPTS = 8
 
-    private val FLOWER_ALLOWED_SOILS = setOf(
-        Blocks.GRASS, Blocks.DIRT, Blocks.FARMLAND
-    )
-
     @SubscribeEvent
     @JvmStatic fun onBonemealUsedOnDirt(event: BonemealEvent) {
         val world = event.world
@@ -33,7 +30,7 @@ object EventBonemeal {
         val block = event.block
         val up = event.pos.up()
 
-        if (world.isAirBlock(up) && block.block in FLOWER_ALLOWED_SOILS) {
+        if (world.isAirBlock(up) && block.material == Material.GRASS) {
             if (ModConfig.Cornflower.enabled) {
                 growFlowers(up, world, ModBlocks.CORNFLOWER)
             }
