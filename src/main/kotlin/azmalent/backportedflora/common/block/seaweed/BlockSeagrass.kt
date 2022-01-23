@@ -1,7 +1,7 @@
 package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
-import net.minecraft.block.BlockLiquid
+import net.minecraft.block.BlockLiquid.LEVEL
 import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
@@ -38,7 +38,7 @@ class BlockSeagrass : AbstractSeaweed(NAME), IGrowable {
     init {
         defaultState = blockState.baseState
                 .withProperty(VARIANT, SeagrassVariant.SINGLE)
-                .withProperty(BlockLiquid.LEVEL, 15)
+                .withProperty(LEVEL, 15)
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
@@ -50,7 +50,7 @@ class BlockSeagrass : AbstractSeaweed(NAME), IGrowable {
     }
 
     override fun createBlockState(): BlockStateContainer {
-        return BlockStateContainer(this, VARIANT, BlockLiquid.LEVEL)
+        return BlockStateContainer(this, VARIANT, LEVEL)
     }
 
     override fun getActualState(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): IBlockState {
@@ -72,21 +72,17 @@ class BlockSeagrass : AbstractSeaweed(NAME), IGrowable {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.block.registryName
-            !== Blocks.WATER.registryName
-            && up.block.registryName !== this.registryName) {
-            return false
-        }
+        if ((up.block.registryName != Blocks.WATER.registryName
+            && up.block.registryName != Blocks.FLOWING_WATER.registryName)
+            && up.block.registryName != this.registryName) return false
 
 
-        //Must have a SINGLE Rivergrass or valid soil below
+        //Must have a SINGLE weed or valid soil below
         val down = worldIn.getBlockState(pos.down())
         val down2 = worldIn.getBlockState(pos.down(2))
-        if (down.block == this) {
-            return down2.block != this
-        }
-
-        return down.material in ALLOWED_SOILS || (down.block == this && down2.material in ALLOWED_SOILS)
+        if (down.block == this) {                       // if block down is weed
+            return down2.block != this                  // if 2 block down is weed return false
+        } else return down.material in ALLOWED_SOILS    // if block down is not weed return if down is in ALLOWED_SOILS
     }
 
 

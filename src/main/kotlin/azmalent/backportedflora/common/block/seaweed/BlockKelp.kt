@@ -2,7 +2,7 @@ package azmalent.backportedflora.common.block.seaweed
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
-import net.minecraft.block.BlockLiquid
+import net.minecraft.block.BlockLiquid.LEVEL
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
@@ -34,7 +34,7 @@ class BlockKelp : AbstractSeaweed(NAME) {
         defaultState = blockState.baseState
                 .withProperty(IS_TOP_BLOCK, false)
                 .withProperty(AGE, 0)
-                .withProperty(BlockLiquid.LEVEL, 15)
+                .withProperty(LEVEL, 15)
 
         tickRandomly = ModConfig.Kelp.growthEnabled
     }
@@ -48,7 +48,7 @@ class BlockKelp : AbstractSeaweed(NAME) {
     }
 
     override fun createBlockState(): BlockStateContainer {
-        return BlockStateContainer(this, IS_TOP_BLOCK, AGE, BlockLiquid.LEVEL)
+        return BlockStateContainer(this, IS_TOP_BLOCK, AGE, LEVEL)
     }
 
     override fun getActualState(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): IBlockState {
@@ -71,21 +71,14 @@ class BlockKelp : AbstractSeaweed(NAME) {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.block.registryName
-            !== Blocks.WATER.registryName
-            && up.block.registryName !== this.registryName) {
-            return false
-        }
+        if ((up.block.registryName != Blocks.WATER.registryName
+            && up.block.registryName != Blocks.FLOWING_WATER.registryName)
+            && up.block.registryName != this.registryName) return false
 
 
-        //Must have a SINGLE Rivergrass or valid soil below
+        //Must have kelp or valid soil below
         val down = worldIn.getBlockState(pos.down())
-        val down2 = worldIn.getBlockState(pos.down(2))
-        if (down.block == this) {
-            return down2.block != this
-        }
-
-        return down.material in ALLOWED_SOILS || (down.block == this && down2.material in ALLOWED_SOILS)
+        return down.block == this || down.material in ALLOWED_SOILS
     }
 
     override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {
@@ -114,6 +107,7 @@ class BlockKelp : AbstractSeaweed(NAME) {
 
         return topPos
     }
+
 
     // IGrowable implementation
     override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState, isClient: Boolean): Boolean {
