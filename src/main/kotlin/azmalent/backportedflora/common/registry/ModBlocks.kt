@@ -5,9 +5,9 @@ import azmalent.backportedflora.common.block.BlockDriedKelp
 import azmalent.backportedflora.common.block.flower.BlockCornflower
 import azmalent.backportedflora.common.block.flower.BlockLilyOfTheValley
 import azmalent.backportedflora.common.block.flower.BlockWitherRose
-import azmalent.backportedflora.common.block.freshwaterweed.BlockRivergrass
-import azmalent.backportedflora.common.block.seaweed.BlockKelp
-import azmalent.backportedflora.common.block.seaweed.BlockSeagrass
+import azmalent.backportedflora.common.block.freshwater.BlockRivergrass
+import azmalent.backportedflora.common.block.saltwater.BlockKelp
+import azmalent.backportedflora.common.block.saltwater.BlockSeagrass
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraftforge.fml.common.Loader

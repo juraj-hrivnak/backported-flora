@@ -2,7 +2,7 @@ package azmalent.backportedflora.common.event
 
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
-import azmalent.backportedflora.common.block.seaweed.AbstractSeaweed
+import azmalent.backportedflora.common.block.saltwater.AbstractSeaweed
 import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material

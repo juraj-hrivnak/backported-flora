@@ -1,4 +1,4 @@
-package azmalent.backportedflora.common.block.freshwaterweed
+package azmalent.backportedflora.common.block.saltwater
 
 import azmalent.backportedflora.BackportedFlora
 import net.minecraft.block.BlockLiquid.LEVEL
@@ -6,8 +6,9 @@ import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.Entity
+import net.minecraft.init.Blocks
 import net.minecraft.util.IStringSerializable
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
@@ -15,8 +16,8 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
-class BlockRivergrass : AbstractRiverweed(NAME), IGrowable {
-    enum class RivergrassVariant : IStringSerializable {
+class BlockSeagrass : AbstractSeaweed(NAME), IGrowable {
+    enum class SeagrassVariant : IStringSerializable {
         SINGLE, BOTTOM, TOP;
 
         override fun getName(): String {
@@ -29,15 +30,15 @@ class BlockRivergrass : AbstractRiverweed(NAME), IGrowable {
     }
 
     companion object {
-        const val NAME = "rivergrass"
+        const val NAME = "seagrass"
         const val REGISTRY_NAME = "${BackportedFlora.MODID}:$NAME"
 
-        val VARIANT: PropertyEnum<RivergrassVariant> = PropertyEnum.create("variant", RivergrassVariant::class.java)
+        val VARIANT: PropertyEnum<SeagrassVariant> = PropertyEnum.create("variant", SeagrassVariant::class.java)
     }
 
     init {
         defaultState = blockState.baseState
-                .withProperty(VARIANT, RivergrassVariant.SINGLE)
+                .withProperty(VARIANT, SeagrassVariant.SINGLE)
                 .withProperty(LEVEL, 15)
     }
 
@@ -54,13 +55,13 @@ class BlockRivergrass : AbstractRiverweed(NAME), IGrowable {
     }
 
     override fun getActualState(state: IBlockState, worldIn: IBlockAccess, pos: BlockPos): IBlockState {
-        val hasRivergrassBelow = worldIn.getBlockState(pos.down()).block == this
-        val hasRivergrassAbove = worldIn.getBlockState(pos.up()).block == this
+        val hasSeagrassBelow = worldIn.getBlockState(pos.down()).block == this
+        val hasSeagrassAbove = worldIn.getBlockState(pos.up()).block == this
 
         return state.withProperty(VARIANT, when {
-            hasRivergrassBelow -> RivergrassVariant.TOP
-            hasRivergrassAbove -> RivergrassVariant.BOTTOM
-            else -> RivergrassVariant.SINGLE
+            hasSeagrassBelow -> SeagrassVariant.TOP
+            hasSeagrassAbove -> SeagrassVariant.BOTTOM
+            else -> SeagrassVariant.SINGLE
         })
     }
 
@@ -72,7 +73,8 @@ class BlockRivergrass : AbstractRiverweed(NAME), IGrowable {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.block.registryName != REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")).registryName
+        if ((up.block.registryName != Blocks.WATER.registryName
+            && up.block.registryName != Blocks.FLOWING_WATER.registryName)
             && up.block.registryName != this.registryName) return false
 
 
@@ -88,7 +90,7 @@ class BlockRivergrass : AbstractRiverweed(NAME), IGrowable {
     // IGrowable implementation
     override fun canGrow(worldIn: World, pos: BlockPos, state: IBlockState, isClient: Boolean): Boolean {
         val actualState = state.getActualState(worldIn, pos)
-        return actualState.getValue(VARIANT) == RivergrassVariant.SINGLE
+        return actualState.getValue(VARIANT) == SeagrassVariant.SINGLE
                 && canBlockStay(worldIn, pos.up(), state)
     }
 

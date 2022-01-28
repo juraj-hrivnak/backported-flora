@@ -1,8 +1,8 @@
 package azmalent.backportedflora.common.world
 
 import azmalent.backportedflora.ModConfig
-import azmalent.backportedflora.common.block.seaweed.BlockKelp
-import azmalent.backportedflora.common.block.seaweed.BlockKelp.Companion.AGE
+import azmalent.backportedflora.common.block.saltwater.BlockKelp
+import azmalent.backportedflora.common.block.saltwater.BlockKelp.Companion.AGE
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.util.WorldGenUtil
 import net.minecraft.init.Blocks
