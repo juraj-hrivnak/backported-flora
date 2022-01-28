@@ -1,4 +1,4 @@
-package azmalent.backportedflora.common.block.freshwaterweed
+package azmalent.backportedflora.common.block.freshwater
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.client.ModSoundTypes
@@ -7,6 +7,7 @@ import net.minecraft.block.IGrowable
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockRenderLayer
@@ -16,7 +17,6 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
-import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
@@ -63,6 +63,12 @@ abstract class AbstractRiverweed(name: String) : Block(Material.WATER, MapColor.
 
     override fun isOpaqueCube(state: IBlockState): Boolean {
         return false
+    }
+
+    override fun onEntityCollision(worldIn: World?, pos: BlockPos?, state: IBlockState?, entityIn: Entity) {
+        entityIn.motionX = entityIn.motionX / 1.1
+        entityIn.motionY = entityIn.motionY / 1.1
+        entityIn.motionZ = entityIn.motionZ / 1.1
     }
 
     //Block behavior
