@@ -24,20 +24,27 @@ import org.apache.logging.log4j.Logger
 import java.io.File
 
 
-@Mod(modid = BackportedFlora.MODID, name = BackportedFlora.NAME, version = BackportedFlora.VERSION, modLanguageAdapter = BackportedFlora.ADAPTER)
+@Mod(
+    modid = BackportedFlora.MODID,
+    name = BackportedFlora.NAME,
+    version = BackportedFlora.VERSION,
+    dependencies = BackportedFlora.DEPENDENCIES,
+    acceptedMinecraftVersions = BackportedFlora.ACCEPTED_MINECRAFT_VERSIONS,
+    modLanguageAdapter = BackportedFlora.ADAPTER
+)
+
 @Mod.EventBusSubscriber
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Backported Flora"
     const val VERSION = "1.8"
-    const val CONFIG_FILE_NAME = "$MODID.cfg"
-
+    const val DEPENDENCIES = "required-after:forgelin@[1.8.4,)"
+    const val ACCEPTED_MINECRAFT_VERSIONS = "[1.12,1.12.2,)"
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
+
+    const val CONFIG_FILE_NAME = "$MODID.cfg"
     const val SERVER_PROXY = "azmalent.backportedflora.proxy.ServerProxy"
     const val CLIENT_PROXY = "azmalent.backportedflora.proxy.ClientProxy"
-
-    @Mod.Instance
-    lateinit var instance: BackportedFlora
 
     val creativeTab = ModCreativeTab()
 
@@ -74,20 +81,23 @@ object BackportedFlora {
     }
 
     @SubscribeEvent
-    @JvmStatic fun onRegisterBlocks(event: RegistryEvent.Register<Block>) {
+    @JvmStatic
+    fun onRegisterBlocks(event: RegistryEvent.Register<Block>) {
         LOGGER.info("Registering blocks")
         ModBlocks.register(event.registry)
     }
 
     @SubscribeEvent
-    @JvmStatic fun onRegisterItems(event: RegistryEvent.Register<Item>) {
+    @JvmStatic
+    fun onRegisterItems(event: RegistryEvent.Register<Item>) {
         LOGGER.info("Registering items")
         ModBlocks.registerItemBlocks(event.registry)
         ModItems.register(event.registry)
     }
 
     @SubscribeEvent
-    @JvmStatic fun onRegisterSoundEvents(event: RegistryEvent.Register<SoundEvent>) {
+    @JvmStatic
+    fun onRegisterSoundEvents(event: RegistryEvent.Register<SoundEvent>) {
         LOGGER.info("Registering sounds")
         ModSoundEvents.register(event.registry)
     }

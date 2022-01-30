@@ -6,7 +6,6 @@ import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
 import net.minecraft.util.IStringSerializable
 import net.minecraft.util.math.BlockPos
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
-class BlockSeagrass : AbstractSeaweed(NAME), IGrowable {
+class BlockSeagrass : AbstractAquaticPlant(NAME), IGrowable {
     enum class SeagrassVariant : IStringSerializable {
         SINGLE, BOTTOM, TOP;
 

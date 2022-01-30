@@ -1,4 +1,4 @@
-package azmalent.backportedflora.common.block.freshwater
+package azmalent.backportedflora.common.block.saltwater
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.client.ModSoundTypes
@@ -8,11 +8,11 @@ import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
+import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
-abstract class AbstractRiverweed(name: String) : Block(Material.WATER, MapColor.WATER), IGrowable {
+abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapColor.WATER), IGrowable {
     companion object {
         val ALLOWED_SOILS = setOf<Material>(
                 Material.GROUND, Material.SAND, Material.GRASS, Material.CLAY, Material.ROCK
@@ -77,7 +77,7 @@ abstract class AbstractRiverweed(name: String) : Block(Material.WATER, MapColor.
     private fun checkAndDropBlock(world: IBlockAccess, pos: BlockPos, state: IBlockState) {
         if (!canBlockStay(world as World, pos, state)) {
             dropBlockAsItem(world, pos, state, 0)
-            world.setBlockState(pos, REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")).defaultState, 3)
+            world.setBlockState(pos, Blocks.WATER.defaultState, 3)
         }
     }
 
@@ -99,7 +99,7 @@ abstract class AbstractRiverweed(name: String) : Block(Material.WATER, MapColor.
 
     //Leave water when broken
     override fun onPlayerDestroy(worldIn: World, pos: BlockPos, state: IBlockState) {
-        worldIn.setBlockState(pos, REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")).defaultState, 3)
+        worldIn.setBlockState(pos, Blocks.WATER.defaultState, 3)
     }
 
 

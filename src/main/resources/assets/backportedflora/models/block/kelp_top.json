@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "backportedflora:blocks/seaweed/kelp_top"
+    }
+}

@@ -2,7 +2,7 @@ package azmalent.backportedflora.common.event
 
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
-import azmalent.backportedflora.common.block.saltwater.AbstractSeaweed
+import azmalent.backportedflora.common.block.saltwater.AbstractAquaticPlant
 import azmalent.backportedflora.common.registry.ModBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -68,7 +68,7 @@ object EventBonemeal {
         val block = event.block
         val up = event.pos.up()
 
-        if (world.getBlockState(up).block == Blocks.WATER && block.material in AbstractSeaweed.ALLOWED_SOILS) {
+        if (world.getBlockState(up).block == Blocks.WATER && block.material in AbstractAquaticPlant.ALLOWED_SOILS) {
             if (!world.isRemote) {
                 growSeagrass(up, world)
                 event.result = Event.Result.ALLOW
@@ -84,7 +84,7 @@ object EventBonemeal {
                         "simpledifficulty",
                         "purifiedwater"
                     )
-                ) && block.material in AbstractSeaweed.ALLOWED_SOILS
+                ) && block.material in AbstractAquaticPlant.ALLOWED_SOILS
             ) {
                 if (!world.isRemote) {
                     growRivergrass(up, world)

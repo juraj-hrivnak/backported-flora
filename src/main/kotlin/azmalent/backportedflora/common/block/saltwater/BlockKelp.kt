@@ -7,7 +7,6 @@ import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.init.Blocks
 import net.minecraft.util.EnumFacing
@@ -20,7 +19,7 @@ import net.minecraftforge.common.BiomeDictionary
 import java.util.*
 import kotlin.math.min
 
-class BlockKelp : AbstractSeaweed(NAME) {
+class BlockKelp : AbstractAquaticPlant(NAME) {
     companion object {
         const val NAME = "kelp"
         const val REGISTRY_NAME = "${BackportedFlora.MODID}:$NAME"

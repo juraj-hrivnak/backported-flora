@@ -38,12 +38,21 @@ object ModBlocks {
     @ObjectHolder(BlockDriedKelp.REGISTRY_NAME)
     lateinit var DRIED_KELP_BLOCK: BlockDriedKelp
 
+//    //  Biomes o' Plenty integration:
+//    @ObjectHolder(BlockSeaweed.REGISTRY_NAME)
+//    lateinit var SEAGRASSBOP: BlockSeaweed
+
     fun register(registry: IForgeRegistry<Block>) {
         if (ModConfig.Seagrass.enabled) registry.register(BlockSeagrass())
 
         if (Loader.isModLoaded("simpledifficulty")) {
             registry.register(BlockRivergrass())
         }
+
+//        //  Biomes o' Plenty integration:
+//        if (Loader.isModLoaded("biomesoplenty")) {
+//            registry.register(BlockSeaweed())
+//        }
 
         if (ModConfig.Kelp.enabled) {
             registry.register(BlockKelp())
@@ -64,6 +73,11 @@ object ModBlocks {
             registry.register(RIVERGRASS.createItemBlock())
         }
 
+//        //  Biomes o' Plenty integration:
+//        if (Loader.isModLoaded("biomesoplenty")) {
+//            registry.register(SEAGRASSBOP.createItemBlock())
+//        }
+
         if (ModConfig.Kelp.enabled) {
             registry.register(KELP.createItemBlock())
             if (ModConfig.Kelp.driedKelpEnabled) {
@@ -83,6 +97,11 @@ object ModBlocks {
         if (Loader.isModLoaded("simpledifficulty")) {
             RIVERGRASS.registerItemModel()
         }
+
+//        //  Biomes o' Plenty integration:
+//        if (Loader.isModLoaded("biomesoplenty")) {
+//            SEAGRASSBOP.registerItemModel()
+//        }
 
         if (ModConfig.Kelp.enabled) {
             KELP.registerItemModel()
