@@ -1,6 +1,8 @@
 package azmalent.backportedflora.common.util
 
+import net.minecraft.block.Block
 import net.minecraft.init.Blocks
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
@@ -12,7 +14,7 @@ object WorldGenUtil {
 
     fun canSeeSky(world: World, pos: BlockPos): Boolean {
         var topPos = pos
-        while (world.getBlockState(topPos).block == Blocks.WATER) {
+        while (world.getBlockState(topPos).block == Block.REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater"))) {
             topPos = topPos.up()
         }
 

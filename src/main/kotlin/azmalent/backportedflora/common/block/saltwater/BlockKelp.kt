@@ -2,6 +2,7 @@ package azmalent.backportedflora.common.block.saltwater
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
+import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid.LEVEL
 import net.minecraft.block.properties.PropertyBool
 import net.minecraft.block.properties.PropertyInteger
@@ -11,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.init.Blocks
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.EnumHand
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
@@ -71,8 +73,7 @@ class BlockKelp : AbstractAquaticPlant(NAME) {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if ((up.block.registryName != Blocks.WATER.registryName
-            && up.block.registryName != Blocks.FLOWING_WATER.registryName)
+        if (up.block.registryName != REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater")).registryName
             && up.block.registryName != this.registryName) return false
 
 
@@ -88,7 +89,7 @@ class BlockKelp : AbstractAquaticPlant(NAME) {
         val age = state.getValue(AGE)
         if (age < MAX_AGE && rand.nextDouble() < 0.14) {
             val up = worldIn.getBlockState(pos.up())
-            if (up.block == Blocks.WATER) {
+            if (up.block == REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater"))) {
                 val newBlockState = defaultState.withProperty(AGE, age + 1)
                 if (canBlockStay(worldIn, pos.up(), newBlockState)) {
                     worldIn.setBlockState(pos.up(), newBlockState)
