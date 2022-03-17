@@ -2,6 +2,7 @@ package azmalent.backportedflora.common.block.saltwater
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid.LEVEL
 import net.minecraft.block.properties.PropertyBool
@@ -73,8 +74,8 @@ class BlockKelp : AbstractAquaticPlant(NAME) {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.block.registryName != REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater")).registryName
-            && up.block.registryName != this.registryName) return false
+        if (up.block != SDFluids.blockSaltWater
+            && up.block != this) return false
 
 
         //Must have kelp or valid soil below
@@ -89,7 +90,7 @@ class BlockKelp : AbstractAquaticPlant(NAME) {
         val age = state.getValue(AGE)
         if (age < MAX_AGE && rand.nextDouble() < 0.14) {
             val up = worldIn.getBlockState(pos.up())
-            if (up.block == REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater"))) {
+            if (up.block == SDFluids.blockSaltWater) {
                 val newBlockState = defaultState.withProperty(AGE, age + 1)
                 if (canBlockStay(worldIn, pos.up(), newBlockState)) {
                     worldIn.setBlockState(pos.up(), newBlockState)

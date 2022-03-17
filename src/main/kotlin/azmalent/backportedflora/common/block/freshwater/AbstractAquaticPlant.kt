@@ -2,17 +2,18 @@ package azmalent.backportedflora.common.block.freshwater
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.client.ModSoundTypes
+import com.charles445.simpledifficulty.api.SDFluids.blockPurifiedWater
 import net.minecraft.block.Block
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
+import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -77,7 +78,15 @@ abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapCol
     private fun checkAndDropBlock(world: IBlockAccess, pos: BlockPos, state: IBlockState) {
         if (!canBlockStay(world as World, pos, state)) {
             dropBlockAsItem(world, pos, state, 0)
-            world.setBlockState(pos, REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")).defaultState, 3)
+
+            val up = world.getBlockState(pos.up())
+
+            if (up.block == blockPurifiedWater) {
+                world.setBlockState(pos, blockPurifiedWater.defaultState, 3)
+            }
+            if (up.block == Blocks.WATER || up.block == Blocks.FLOWING_WATER) {
+                world.setBlockState(pos, Blocks.WATER.defaultState, 3)
+            }
         }
     }
 
@@ -99,7 +108,14 @@ abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapCol
 
     //Leave water when broken
     override fun onPlayerDestroy(worldIn: World, pos: BlockPos, state: IBlockState) {
-        worldIn.setBlockState(pos, REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")).defaultState, 3)
+        val up = worldIn.getBlockState(pos.up())
+
+        if (up.block == blockPurifiedWater) {
+            worldIn.setBlockState(pos, blockPurifiedWater.defaultState, 3)
+        }
+        if (up.block == Blocks.WATER || up.block == Blocks.FLOWING_WATER) {
+            worldIn.setBlockState(pos, Blocks.WATER.defaultState, 3)
+        }
     }
 
 

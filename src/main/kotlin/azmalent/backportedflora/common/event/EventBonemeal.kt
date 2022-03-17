@@ -4,15 +4,14 @@ import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
 import azmalent.backportedflora.common.block.saltwater.AbstractAquaticPlant
 import azmalent.backportedflora.common.registry.ModBlocks
-import net.minecraft.block.Block
+import com.charles445.simpledifficulty.api.SDFluids.blockPurifiedWater
+import com.charles445.simpledifficulty.api.SDFluids.blockSaltWater
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.init.Blocks
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.event.entity.player.BonemealEvent
-import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.eventhandler.Event
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -67,10 +66,13 @@ object EventBonemeal {
         val world = event.world
         val block = event.block
         val up = event.pos.up()
+        val upBlock = world.getBlockState(up).block
 
-        if (world.getBlockState(up).block == Blocks.WATER && block.material in AbstractAquaticPlant.ALLOWED_SOILS) {
+        if ((upBlock == Blocks.WATER || upBlock == blockPurifiedWater) &&
+            block.material in AbstractAquaticPlant.ALLOWED_SOILS
+        ) {
             if (!world.isRemote) {
-                growSeagrass(up, world)
+                growRivergrass(up, world)
                 event.result = Event.Result.ALLOW
             }
             else if (event.entityPlayer == Minecraft.getMinecraft().player) {
@@ -78,20 +80,13 @@ object EventBonemeal {
             }
         }
 
-        if (Loader.isModLoaded("simpledifficulty")) {
-            if (world.getBlockState(up).block == Block.REGISTRY.getObject(
-                    ResourceLocation(
-                        "simpledifficulty",
-                        "purifiedwater"
-                    )
-                ) && block.material in AbstractAquaticPlant.ALLOWED_SOILS
-            ) {
-                if (!world.isRemote) {
-                    growRivergrass(up, world)
-                    event.result = Event.Result.ALLOW
-                } else if (event.entityPlayer == Minecraft.getMinecraft().player) {
-                    Minecraft.getMinecraft().player.swingArm(event.hand!!)
-                }
+        if (upBlock == blockSaltWater && block.material in AbstractAquaticPlant.ALLOWED_SOILS) {
+            if (!world.isRemote) {
+                growSeagrass(up, world)
+                event.result = Event.Result.ALLOW
+            }
+            else if (event.entityPlayer == Minecraft.getMinecraft().player) {
+                Minecraft.getMinecraft().player.swingArm(event.hand!!)
             }
         }
     }
@@ -119,13 +114,14 @@ object EventBonemeal {
 
         for (i in 0 until SEAGRASS_GENERATION_ATTEMPTS) {
             val blockPos = pos.add(
-                    rand.nextInt(4) - rand.nextInt(4),
-                    rand.nextInt(2) - rand.nextInt(2),
-                    rand.nextInt(4) - rand.nextInt(4)
+                rand.nextInt(4) - rand.nextInt(4),
+                rand.nextInt(2) - rand.nextInt(2),
+                rand.nextInt(4) - rand.nextInt(4)
             )
 
-            if (world.getBlockState(blockPos).block == Blocks.WATER &&
-                    ModBlocks.SEAGRASS.canPlaceBlockAt(world, blockPos)) {
+            if (world.getBlockState(blockPos).block == blockSaltWater &&
+                ModBlocks.SEAGRASS.canPlaceBlockAt(world, blockPos)
+            ) {
                 world.setBlockState(blockPos, ModBlocks.SEAGRASS.defaultState)
             }
         }
@@ -140,10 +136,11 @@ object EventBonemeal {
                     rand.nextInt(2) - rand.nextInt(2),
                     rand.nextInt(4) - rand.nextInt(4)
             )
+            val block = world.getBlockState(blockPos).block
 
-            if (world.getBlockState(blockPos).block
-                == Block.REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater"))
-                && ModBlocks.RIVERGRASS.canPlaceBlockAt(world, blockPos)) {
+            if ((block == blockPurifiedWater || block == Blocks.WATER)
+                && ModBlocks.RIVERGRASS.canPlaceBlockAt(world, blockPos)
+            ) {
                 world.setBlockState(blockPos, ModBlocks.RIVERGRASS.defaultState)
             }
         }

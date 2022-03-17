@@ -77,12 +77,16 @@ repositories {
     mavenCentral()
 //  Forgelin
     maven(url = "http://maven.shadowfacts.net/")
+//  CurseForge
+    maven(url = "https://www.cursemaven.com")
 }
 
+@Suppress("DEPRECATION")
 dependencies {
     "minecraft"("net.minecraftforge:forge:1.12.2-14.23.5.2860")
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50")
     compile("net.shadowfacts:Forgelin:1.8.4")
+    compile("curse.maven:simpledifficulty-574162:3645250")
 }
 
 

@@ -1,6 +1,7 @@
 package azmalent.backportedflora.common.block.saltwater
 
 import azmalent.backportedflora.BackportedFlora
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.BlockLiquid.LEVEL
 import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyEnum
@@ -73,8 +74,8 @@ class BlockSeagrass : AbstractAquaticPlant(NAME), IGrowable {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.block.registryName != REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater")).registryName
-            && up.block.registryName != this.registryName) return false
+        if (up.block != SDFluids.blockSaltWater
+            && up.block != this) return false
 
 
         //Must have a SINGLE weed or valid soil below

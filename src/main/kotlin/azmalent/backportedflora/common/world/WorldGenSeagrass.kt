@@ -3,6 +3,7 @@ package azmalent.backportedflora.common.world
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.util.WorldGenUtil
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
 import net.minecraft.util.ResourceLocation
@@ -48,7 +49,7 @@ class WorldGenSeagrass : IWorldGenerator {
 
             if (!world.isBlockLoaded(pos)) continue
 
-            if (world.getBlockState(pos).block == Block.REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater")) && pos.y < 64) {
+            if (world.getBlockState(pos).block == SDFluids.blockSaltWater && pos.y < 64) {
                 placeSeagrass(world, pos, rand)
             }
         }

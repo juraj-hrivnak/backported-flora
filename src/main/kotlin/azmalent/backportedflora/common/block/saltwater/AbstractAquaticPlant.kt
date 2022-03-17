@@ -2,18 +2,17 @@ package azmalent.backportedflora.common.block.saltwater
 
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.client.ModSoundTypes
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.Block
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.MapColor
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
-import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -78,7 +77,7 @@ abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapCol
     private fun checkAndDropBlock(world: IBlockAccess, pos: BlockPos, state: IBlockState) {
         if (!canBlockStay(world as World, pos, state)) {
             dropBlockAsItem(world, pos, state, 0)
-            world.setBlockState(pos, REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater")).defaultState, 3)
+            world.setBlockState(pos, SDFluids.blockSaltWater.defaultState, 3)
         }
     }
 
@@ -100,7 +99,7 @@ abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapCol
 
     //Leave water when broken
     override fun onPlayerDestroy(worldIn: World, pos: BlockPos, state: IBlockState) {
-        worldIn.setBlockState(pos, REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater")).defaultState, 3)
+        worldIn.setBlockState(pos, SDFluids.blockSaltWater.defaultState, 3)
     }
 
 

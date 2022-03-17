@@ -1,13 +1,14 @@
 package azmalent.backportedflora.common.block.freshwater
 
 import azmalent.backportedflora.BackportedFlora
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.BlockLiquid.LEVEL
 import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
+import net.minecraft.init.Blocks
 import net.minecraft.util.IStringSerializable
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
@@ -72,8 +73,10 @@ class BlockRivergrass : AbstractAquaticPlant(NAME), IGrowable {
     override fun canBlockStay(worldIn: World, pos: BlockPos, state: IBlockState): Boolean {
         //Must have water above
         val up = worldIn.getBlockState(pos.up())
-        if (up.block.registryName != REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")).registryName
-            && up.block.registryName != this.registryName) return false
+        if (up.block != SDFluids.blockPurifiedWater &&
+            up.block != Blocks.WATER &&
+            up.block != Blocks.FLOWING_WATER &&
+            up.block != this) return false
 
 
         //Must have a SINGLE weed or valid soil below

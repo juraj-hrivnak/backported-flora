@@ -3,7 +3,9 @@ package azmalent.backportedflora.common.world
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.util.WorldGenUtil
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.Block
+import net.minecraft.init.Blocks
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -47,7 +49,8 @@ class WorldGenRivergrass : IWorldGenerator {
 
             if (!world.isBlockLoaded(pos)) continue
 
-            if (world.getBlockState(pos).block == Block.REGISTRY.getObject(ResourceLocation("simpledifficulty", "purifiedwater")) && pos.y < 64) {
+            val block = world.getBlockState(pos).block
+            if ((block == SDFluids.blockPurifiedWater || block == Blocks.WATER) && pos.y < 64) {
                 placeRivergrass(world, pos, rand)
             }
         }
