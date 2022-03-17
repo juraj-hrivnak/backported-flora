@@ -79,14 +79,19 @@ abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapCol
         if (!canBlockStay(world as World, pos, state)) {
             dropBlockAsItem(world, pos, state, 0)
 
-            val up = world.getBlockState(pos.up())
+            val up = world.getBlockState(pos.up(1))
+            val up2 = world.getBlockState(pos.up(2))
 
-            if (up.block == blockPurifiedWater) {
+            if (up.block == blockPurifiedWater || up2.block == blockPurifiedWater) {
                 world.setBlockState(pos, blockPurifiedWater.defaultState, 3)
             }
-            if (up.block == Blocks.WATER || up.block == Blocks.FLOWING_WATER) {
+            else if ((up.block == Blocks.WATER || up.block == Blocks.FLOWING_WATER) ||
+                (up2.block == Blocks.WATER || up2.block == Blocks.FLOWING_WATER)) {
+                world.setBlockState(pos, Blocks.WATER.defaultState, 3)
+            } else {
                 world.setBlockState(pos, Blocks.WATER.defaultState, 3)
             }
+
         }
     }
 
@@ -108,12 +113,16 @@ abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapCol
 
     //Leave water when broken
     override fun onPlayerDestroy(worldIn: World, pos: BlockPos, state: IBlockState) {
-        val up = worldIn.getBlockState(pos.up())
+        val up = worldIn.getBlockState(pos.up(1))
+        val up2 = worldIn.getBlockState(pos.up(2))
 
-        if (up.block == blockPurifiedWater) {
+        if (up.block == blockPurifiedWater || up2.block == blockPurifiedWater) {
             worldIn.setBlockState(pos, blockPurifiedWater.defaultState, 3)
         }
-        if (up.block == Blocks.WATER || up.block == Blocks.FLOWING_WATER) {
+        else if ((up.block == Blocks.WATER || up.block == Blocks.FLOWING_WATER) ||
+            (up2.block == Blocks.WATER || up2.block == Blocks.FLOWING_WATER)) {
+            worldIn.setBlockState(pos, Blocks.WATER.defaultState, 3)
+        } else {
             worldIn.setBlockState(pos, Blocks.WATER.defaultState, 3)
         }
     }

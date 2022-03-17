@@ -1,6 +1,8 @@
 package azmalent.backportedflora.common.util
 
+import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
 import net.minecraft.init.Blocks
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
@@ -14,11 +16,12 @@ object WorldGenUtil {
 
     fun canSeeSky(world: World, pos: BlockPos): Boolean {
         var topPos = pos
-        while (world.getBlockState(topPos).block == Block.REGISTRY.getObject(ResourceLocation("simpledifficulty", "saltwater"))) {
+
+        while (world.getBlockState(topPos).material == Material.WATER) {
             topPos = topPos.up()
         }
 
-        val block = world.getBlockState(topPos)
+        val block = world.getBlockState(topPos).block
         if (world.isAirBlock(topPos) || block == Blocks.ICE || block == Blocks.WATERLILY) {
             return world.canSeeSky(topPos)
         }

@@ -18,7 +18,7 @@ import java.util.*
 class WorldGenSeagrass : IWorldGenerator {
     override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
         if (world.worldType != WorldType.FLAT) {
-            if (rand.nextFloat() < ModConfig.Seagrass.generationChance) {
+            if (rand.nextFloat() < ModConfig.Seagrass.generationChance * 8) {
                 val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
                 for (i in 0..ModConfig.Seagrass.patchAttempts) {

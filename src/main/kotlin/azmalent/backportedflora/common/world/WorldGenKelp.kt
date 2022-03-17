@@ -25,7 +25,7 @@ class WorldGenKelp : IWorldGenerator {
             if (rand.nextFloat() < ModConfig.Kelp.generationChance) {
                 val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
-                for (i in 0 until ModConfig.Kelp.patchAttempts) {
+                for (i in 0 until ModConfig.Kelp.patchAttempts * 2) {
                     val x = rand.nextInt(16) + 8
                     val z = rand.nextInt(16) + 8
 
@@ -46,9 +46,9 @@ class WorldGenKelp : IWorldGenerator {
 
         for (i in 0 until ModConfig.Kelp.plantAttempts) {
             val pos = targetPos.add(
-                rand.nextInt(8) - rand.nextInt(8),
+                rand.nextInt(10) - rand.nextInt(10),
                 rand.nextInt(4) - rand.nextInt(4),
-                rand.nextInt(8) - rand.nextInt(8)
+                rand.nextInt(10) - rand.nextInt(10)
             )
 
             if (!world.isBlockLoaded(pos)) continue

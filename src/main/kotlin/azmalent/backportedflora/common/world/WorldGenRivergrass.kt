@@ -21,7 +21,7 @@ class WorldGenRivergrass : IWorldGenerator {
             if (rand.nextFloat() < ModConfig.Seagrass.generationChance) {
                 val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
-                for (i in 0..ModConfig.Seagrass.patchAttempts) {
+                for (i in 0..ModConfig.Seagrass.patchAttempts * 14) {
                     val x = rand.nextInt(16) + 8
                     val z = rand.nextInt(16) + 8
 
@@ -36,7 +36,7 @@ class WorldGenRivergrass : IWorldGenerator {
     }
 
     private fun generateRivergrass(world: World, rand: Random, targetPos: BlockPos) {
-        if (!ModConfig.Seagrass.canGenerate(world, targetPos) || (!ModConfig.Seagrass.generatesUnderground && !WorldGenUtil.canSeeSky(world, targetPos))) {
+        if (!ModConfig.Seagrass.canGenerate(world, targetPos)) {
             return
         }
 
@@ -50,7 +50,7 @@ class WorldGenRivergrass : IWorldGenerator {
             if (!world.isBlockLoaded(pos)) continue
 
             val block = world.getBlockState(pos).block
-            if ((block == SDFluids.blockPurifiedWater || block == Blocks.WATER) && pos.y < 64) {
+            if ((block == SDFluids.blockPurifiedWater || block == Blocks.WATER) && pos.y < 64 && pos.y > 44 && !WorldGenUtil.canSeeSky(world, targetPos)) {
                 placeRivergrass(world, pos, rand)
             }
         }
@@ -62,8 +62,7 @@ class WorldGenRivergrass : IWorldGenerator {
         if (ModBlocks.RIVERGRASS.canBlockStay(world, pos, state)) {
             world.setBlockState(pos, state, 2)
 
-            //50% to generate it 2 block high (if possible)
-            if (rand.nextDouble() < 0.5) {
+            if (rand.nextDouble() < 0.05) {
                 if (ModBlocks.RIVERGRASS.canBlockStay(world, pos.up(), state)) {
                     world.setBlockState(pos.up(), state, 2)
                 }
