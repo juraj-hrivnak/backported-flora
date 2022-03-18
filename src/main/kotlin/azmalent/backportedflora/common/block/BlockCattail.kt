@@ -208,7 +208,6 @@ class ItemBlockCattail : ItemBlock(ModBlocks.blockCattail) {
                     return ActionResult(EnumActionResult.FAIL, itemstack)
                 }
                 val blockpos1 = blockpos.up()
-                val iblockstate = worldIn.getBlockState(blockpos)
 
                 if (canBlockStay(worldIn, blockpos1)) {
                     // special case for handling block placement with water lilies

@@ -3,7 +3,6 @@ package azmalent.backportedflora.common.block.plant.freshwater
 import azmalent.backportedflora.BackportedFlora
 import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.BlockLiquid.LEVEL
-import net.minecraft.block.IGrowable
 import net.minecraft.block.properties.PropertyEnum
 import net.minecraft.block.state.BlockStateContainer
 import net.minecraft.block.state.IBlockState
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
-class BlockRivergrass : AbstractAquaticPlant(NAME), IGrowable {
+class BlockRivergrass : AbstractAquaticPlant(NAME) {
     enum class RivergrassVariant : IStringSerializable {
         SINGLE, BOTTOM, TOP;
 
