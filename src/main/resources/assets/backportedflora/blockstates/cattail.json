@@ -1,0 +1,34 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "backportedflora:doublecross",
+    "textures": {
+      "cross_bottom": "backportedflora:blocks/cattail/cattail_bottom",
+      "particle": "backportedflora:blocks/cattail/cattail_3"
+    }
+  },
+  "variants": {
+    "age": {
+      "0": {
+        "textures": {
+          "cross": "backportedflora:blocks/cattail/cattail_0"
+        }
+      },
+      "1": {
+        "textures": {
+          "cross": "backportedflora:blocks/cattail/cattail_1"
+        }
+      },
+      "2": {
+        "textures": {
+          "cross": "backportedflora:blocks/cattail/cattail_2"
+        }
+      },
+      "3": {
+        "textures": {
+          "cross": "backportedflora:blocks/cattail/cattail_3"
+        }
+      }
+    }
+  }
+}

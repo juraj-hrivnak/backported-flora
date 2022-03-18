@@ -12,6 +12,7 @@ tile.kelp.name=Kelp
 tile.lily_of_the_valley.name=Lily of the Valley
 tile.cornflower.name=Cornflower
 tile.wither_rose.name=Wither Rose
+tile.cattail.name=Cattail
 
 # Blocks
 tile.dried_kelp_block.name=Dried Kelp Block

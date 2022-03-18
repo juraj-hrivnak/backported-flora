@@ -1,14 +1,11 @@
 package azmalent.backportedflora.common.world
 
 import azmalent.backportedflora.ModConfig
-import azmalent.backportedflora.common.block.saltwater.BlockKelp
-import azmalent.backportedflora.common.block.saltwater.BlockKelp.Companion.AGE
+import azmalent.backportedflora.common.block.plant.saltwater.BlockKelp
+import azmalent.backportedflora.common.block.plant.saltwater.BlockKelp.Companion.AGE
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.util.WorldGenUtil
 import com.charles445.simpledifficulty.api.SDFluids
-import net.minecraft.block.Block
-import net.minecraft.init.Blocks
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldType
@@ -21,7 +18,7 @@ import java.util.*
 class WorldGenKelp : IWorldGenerator {
     override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
         val biome = WorldGenUtil.getBiomeInChunk(world, chunkX, chunkZ)
-        if (ModBlocks.KELP.isBiomeValid(biome) && world.worldType != WorldType.FLAT) {
+        if (ModBlocks.blockKelp.isBiomeValid(biome) && world.worldType != WorldType.FLAT) {
             if (rand.nextFloat() < ModConfig.Kelp.generationChance) {
                 val chunkPos = world.getChunk(chunkX, chunkZ).pos
 
@@ -65,12 +62,11 @@ class WorldGenKelp : IWorldGenerator {
 
         for (i in 0 until height) {
             val kelpPos = pos.up(i)
-            val state = ModBlocks.KELP.defaultState.withProperty(AGE, i + startingAge)
+            val state = ModBlocks.blockKelp.defaultState.withProperty(AGE, i + startingAge)
 
-            if (ModBlocks.KELP.canBlockStay(world, kelpPos, state)) {
+            if (ModBlocks.blockKelp.canBlockStay(world, kelpPos, state)) {
                 world.setBlockState(kelpPos, state, 2)
-            }
-            else break
+            } else break
         }
     }
 }

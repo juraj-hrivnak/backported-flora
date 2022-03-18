@@ -1,4 +1,4 @@
-package azmalent.backportedflora.common.block.freshwater
+package azmalent.backportedflora.common.block.plant.freshwater
 
 import azmalent.backportedflora.BackportedFlora
 import com.charles445.simpledifficulty.api.SDFluids
@@ -38,8 +38,8 @@ class BlockRivergrass : AbstractAquaticPlant(NAME), IGrowable {
 
     init {
         defaultState = blockState.baseState
-                .withProperty(VARIANT, RivergrassVariant.SINGLE)
-                .withProperty(LEVEL, 15)
+            .withProperty(VARIANT, RivergrassVariant.SINGLE)
+            .withProperty(LEVEL, 15)
     }
 
     override fun getStateFromMeta(meta: Int): IBlockState {
@@ -58,11 +58,13 @@ class BlockRivergrass : AbstractAquaticPlant(NAME), IGrowable {
         val hasRivergrassBelow = worldIn.getBlockState(pos.down()).block == this
         val hasRivergrassAbove = worldIn.getBlockState(pos.up()).block == this
 
-        return state.withProperty(VARIANT, when {
-            hasRivergrassBelow -> RivergrassVariant.TOP
-            hasRivergrassAbove -> RivergrassVariant.BOTTOM
-            else -> RivergrassVariant.SINGLE
-        })
+        return state.withProperty(
+            VARIANT, when {
+                hasRivergrassBelow -> RivergrassVariant.TOP
+                hasRivergrassAbove -> RivergrassVariant.BOTTOM
+                else -> RivergrassVariant.SINGLE
+            }
+        )
     }
 
     @SideOnly(Side.CLIENT)
@@ -76,7 +78,8 @@ class BlockRivergrass : AbstractAquaticPlant(NAME), IGrowable {
         if (up.block != SDFluids.blockPurifiedWater &&
             up.block != Blocks.WATER &&
             up.block != Blocks.FLOWING_WATER &&
-            up.block != this) return false
+            up.block != this
+        ) return false
 
 
         //Must have a SINGLE weed or valid soil below

@@ -1,6 +1,8 @@
 package azmalent.backportedflora.proxy
 
+import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
@@ -14,4 +16,6 @@ interface IProxy {
 
     fun registerItemRenderer(item: Item, meta: Int, id: String)
     fun registerItemBlockRenderer(itemBlock: Item, meta: Int, id: String)
+
+    fun registerBlockColourHandlers(block: Block, event: ColorHandlerEvent.Block)
 }

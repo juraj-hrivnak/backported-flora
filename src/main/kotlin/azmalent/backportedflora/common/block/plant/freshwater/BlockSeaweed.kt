@@ -1,4 +1,4 @@
-//package azmalent.backportedflora.common.block.freshwater
+//package azmalent.backportedflora.common.block.plant.freshwater
 //
 //import azmalent.backportedflora.BackportedFlora
 //import azmalent.backportedflora.ModConfig

@@ -4,9 +4,6 @@ import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.registry.ModBlocks
 import azmalent.backportedflora.common.util.WorldGenUtil
 import com.charles445.simpledifficulty.api.SDFluids
-import net.minecraft.block.Block
-import net.minecraft.init.Blocks
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldType
@@ -56,14 +53,14 @@ class WorldGenSeagrass : IWorldGenerator {
     }
 
     private fun placeSeagrass(world: World, pos: BlockPos, rand: Random) {
-        val state = ModBlocks.SEAGRASS.defaultState
+        val state = ModBlocks.blockSeagrass.defaultState
 
-        if (ModBlocks.SEAGRASS.canBlockStay(world, pos, state)) {
+        if (ModBlocks.blockSeagrass.canBlockStay(world, pos, state)) {
             world.setBlockState(pos, state, 2)
 
             //50% to generate it 2 block high (if possible)
             if (rand.nextDouble() < 0.5) {
-                if (ModBlocks.SEAGRASS.canBlockStay(world, pos.up(), state)) {
+                if (ModBlocks.blockSeagrass.canBlockStay(world, pos.up(), state)) {
                     world.setBlockState(pos.up(), state, 2)
                 }
             }

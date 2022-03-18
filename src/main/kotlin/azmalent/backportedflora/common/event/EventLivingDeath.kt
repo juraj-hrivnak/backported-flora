@@ -23,14 +23,14 @@ object EventLivingDeath {
 
             if (ForgeEventFactory.getMobGriefingEvent(world, entity)) {
                 val pos = entity.position
-                if (world.isAirBlock(pos) && ModBlocks.WITHER_ROSE.canPlaceBlockAt(world, pos)) {
-                    world.setBlockState(pos, ModBlocks.WITHER_ROSE.defaultState, 3)
+                if (world.isAirBlock(pos) && ModBlocks.blockWitherRose.canPlaceBlockAt(world, pos)) {
+                    world.setBlockState(pos, ModBlocks.blockWitherRose.defaultState, 3)
                     placed = true
                 }
             }
 
             if (!placed) {
-                entity.entityDropItem(ItemStack(ModBlocks.WITHER_ROSE), 1f)
+                entity.entityDropItem(ItemStack(ModBlocks.blockWitherRose), 1f)
             }
         }
     }

@@ -36,9 +36,9 @@ import java.io.File
 @Mod.EventBusSubscriber
 object BackportedFlora {
     const val MODID = "backportedflora"
-    const val NAME = "Backported Flora"
+    const val NAME = "Underdog Flora"
     const val VERSION = "2.0"
-    const val DEPENDENCIES = "required-after:forgelin@[1.8.4,)"
+    const val DEPENDENCIES = "required-after:forgelin@[1.8.4,);before:simpledifficulty"
     const val ACCEPTED_MINECRAFT_VERSIONS = "[1.12,1.12.2,)"
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
 

@@ -22,10 +22,12 @@ object ModWorldgen {
             GameRegistry.registerWorldGenerator(WorldGenRivergrass(), 0)
         }
 
+        GameRegistry.registerWorldGenerator(WorldGenCattail(), 0)
+
         if (ModConfig.Kelp.enabled) GameRegistry.registerWorldGenerator(WorldGenKelp(), 0)
 
-        if (ModConfig.Cornflower.enabled) registerOverworldFlowerGen(ModBlocks.CORNFLOWER)
-        if (ModConfig.LilyOfTheValley.enabled) registerOverworldFlowerGen(ModBlocks.LILY_OF_THE_VALLEY)
-        if (ModConfig.WitherRose.enabled) registerNetherFlowerGen(ModBlocks.WITHER_ROSE)
+        if (ModConfig.Cornflower.enabled) registerOverworldFlowerGen(ModBlocks.blockCornflower)
+        if (ModConfig.LilyOfTheValley.enabled) registerOverworldFlowerGen(ModBlocks.blockLilyOfTheValley)
+        if (ModConfig.WitherRose.enabled) registerNetherFlowerGen(ModBlocks.blockWitherRose)
     }
 }

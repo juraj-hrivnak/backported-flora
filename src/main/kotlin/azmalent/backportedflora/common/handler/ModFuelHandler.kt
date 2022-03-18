@@ -10,7 +10,7 @@ class ModFuelHandler : IFuelHandler {
         val item = fuel?.item ?: return 0
 
         if (ModConfig.Kelp.enabled && ModConfig.Kelp.enabled) {
-            if (item == ModBlocks.DRIED_KELP_BLOCK.itemBlock) return 4000
+            if (item == ModBlocks.blockDriedKelp.itemBlock) return 4000
         }
 
         return 0

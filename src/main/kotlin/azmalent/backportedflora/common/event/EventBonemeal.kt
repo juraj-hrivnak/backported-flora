@@ -2,7 +2,7 @@ package azmalent.backportedflora.common.event
 
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
-import azmalent.backportedflora.common.block.saltwater.AbstractAquaticPlant
+import azmalent.backportedflora.common.block.plant.saltwater.AbstractAquaticPlant
 import azmalent.backportedflora.common.registry.ModBlocks
 import com.charles445.simpledifficulty.api.SDFluids.blockPurifiedWater
 import com.charles445.simpledifficulty.api.SDFluids.blockSaltWater
@@ -31,10 +31,10 @@ object EventBonemeal {
 
         if (world.isAirBlock(up) && block.material == Material.GRASS) {
             if (ModConfig.Cornflower.enabled) {
-                growFlowers(up, world, ModBlocks.CORNFLOWER)
+                growFlowers(up, world, ModBlocks.blockCornflower)
             }
             if (ModConfig.LilyOfTheValley.enabled) {
-                growFlowers(up, world, ModBlocks.LILY_OF_THE_VALLEY)
+                growFlowers(up, world, ModBlocks.blockLilyOfTheValley)
             }
             event.result = Event.Result.DEFAULT
         }
@@ -50,7 +50,7 @@ object EventBonemeal {
 
         if (world.isAirBlock(up) && block.block == Blocks.SOUL_SAND) {
             if (!world.isRemote) {
-                growFlowers(up, world, ModBlocks.WITHER_ROSE)
+                growFlowers(up, world, ModBlocks.blockWitherRose)
                 event.result = Event.Result.ALLOW
             }
             else if (event.entityPlayer == Minecraft.getMinecraft().player) {
@@ -120,9 +120,9 @@ object EventBonemeal {
             )
 
             if (world.getBlockState(blockPos).block == blockSaltWater &&
-                ModBlocks.SEAGRASS.canPlaceBlockAt(world, blockPos)
+                ModBlocks.blockSeagrass.canPlaceBlockAt(world, blockPos)
             ) {
-                world.setBlockState(blockPos, ModBlocks.SEAGRASS.defaultState)
+                world.setBlockState(blockPos, ModBlocks.blockSeagrass.defaultState)
             }
         }
     }
@@ -139,9 +139,9 @@ object EventBonemeal {
             val block = world.getBlockState(blockPos).block
 
             if ((block == blockPurifiedWater || block == Blocks.WATER)
-                && ModBlocks.RIVERGRASS.canPlaceBlockAt(world, blockPos)
+                && ModBlocks.blockRivergrass.canPlaceBlockAt(world, blockPos)
             ) {
-                world.setBlockState(blockPos, ModBlocks.RIVERGRASS.defaultState)
+                world.setBlockState(blockPos, ModBlocks.blockRivergrass.defaultState)
             }
         }
     }

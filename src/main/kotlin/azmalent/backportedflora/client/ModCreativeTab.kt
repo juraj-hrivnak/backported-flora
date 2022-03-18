@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack
 
 class ModCreativeTab : CreativeTabs(BackportedFlora.MODID) {
     override fun createIcon(): ItemStack {
-        return ItemStack(ModItems.MOD_ICON)
+        return ItemStack(ModItems.itemModIcon)
     }
 
     override fun hasSearchBar(): Boolean {

@@ -14,8 +14,8 @@ object ModRecipes {
     private fun registerSmelting() {
         if (ModConfig.Kelp.enabled && ModConfig.Kelp.driedKelpEnabled) {
             GameRegistry.addSmelting(
-                ModBlocks.KELP.itemBlock,
-                ItemStack(ModItems.DRIED_KELP),
+                ModBlocks.blockKelp.itemBlock,
+                ItemStack(ModItems.itemDriedKelp),
                 0.1f
             )
         }
