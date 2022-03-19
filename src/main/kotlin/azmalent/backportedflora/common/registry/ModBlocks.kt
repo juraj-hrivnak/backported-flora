@@ -1,18 +1,19 @@
 package azmalent.backportedflora.common.registry
 
+import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
-import azmalent.backportedflora.common.block.BlockCattail
+import azmalent.backportedflora.common.block.crop.BlockCattail
 import azmalent.backportedflora.common.block.BlockDriedKelp
-import azmalent.backportedflora.common.block.ItemBlockCattail
+import azmalent.backportedflora.common.block.crop.ItemBlockCattail
 import azmalent.backportedflora.common.block.flower.BlockCornflower
 import azmalent.backportedflora.common.block.flower.BlockLilyOfTheValley
 import azmalent.backportedflora.common.block.flower.BlockWitherRose
+import azmalent.backportedflora.common.block.grass.BlockGrass
 import azmalent.backportedflora.common.block.plant.freshwater.BlockRivergrass
 import azmalent.backportedflora.common.block.plant.saltwater.BlockKelp
 import azmalent.backportedflora.common.block.plant.saltwater.BlockSeagrass
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import net.minecraftforge.registries.IForgeRegistry
@@ -27,14 +28,14 @@ object ModBlocks {
     val blockWitherRose = BlockWitherRose()
     val blockDriedKelp = BlockDriedKelp()
     val blockCattail = BlockCattail()
-    val itemBlockCattail = ItemBlockCattail()
+    val blockGrass = BlockGrass()
 
     fun register(registry: IForgeRegistry<Block>) {
         if (ModConfig.Seagrass.enabled) registry.register(blockSeagrass)
 
-        if (Loader.isModLoaded("simpledifficulty")) {
-            registry.register(blockRivergrass)
-        }
+        registry.register(blockRivergrass)
+        registry.register(blockCattail)
+        registry.register(blockGrass)
 
         if (ModConfig.Kelp.enabled) {
             registry.register(blockKelp)
@@ -42,8 +43,6 @@ object ModBlocks {
                 registry.register(blockDriedKelp)
             }
         }
-
-        registry.register(blockCattail)
 
         if (ModConfig.Cornflower.enabled) registry.register(blockCornflower)
         if (ModConfig.LilyOfTheValley.enabled) registry.register(blockLilyOfTheValley)
@@ -53,9 +52,9 @@ object ModBlocks {
     fun registerItemBlocks(registry: IForgeRegistry<Item>) {
         if (ModConfig.Seagrass.enabled) registry.register(blockSeagrass.createItemBlock())
 
-        if (Loader.isModLoaded("simpledifficulty")) {
-            registry.register(blockRivergrass.createItemBlock())
-        }
+        registry.register(blockRivergrass.createItemBlock())
+        registry.register(blockGrass.createItemBlock())
+
 
         if (ModConfig.Kelp.enabled) {
             registry.register(blockKelp.createItemBlock())
@@ -64,7 +63,6 @@ object ModBlocks {
             }
         }
 
-        registry.register(itemBlockCattail)
 
         if (ModConfig.Cornflower.enabled) registry.register(blockCornflower.createItemBlock())
         if (ModConfig.LilyOfTheValley.enabled) registry.register(blockLilyOfTheValley.createItemBlock())
@@ -75,9 +73,8 @@ object ModBlocks {
     fun registerModels() {
         if (ModConfig.Seagrass.enabled) blockSeagrass.registerItemModel()
 
-        if (Loader.isModLoaded("simpledifficulty")) {
-            blockRivergrass.registerItemModel()
-        }
+        blockRivergrass.registerItemModel()
+        blockGrass.registerItemModel()
 
         if (ModConfig.Kelp.enabled) {
             blockKelp.registerItemModel()
@@ -86,10 +83,9 @@ object ModBlocks {
             }
         }
 
-        itemBlockCattail.registerItemModel()
-
         if (ModConfig.Cornflower.enabled) blockCornflower.registerItemModel()
         if (ModConfig.LilyOfTheValley.enabled) blockLilyOfTheValley.registerItemModel()
         if (ModConfig.WitherRose.enabled) blockWitherRose.registerItemModel()
     }
+
 }

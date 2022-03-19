@@ -11,6 +11,7 @@ import azmalent.backportedflora.proxy.IProxy
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.util.SoundEvent
+import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.common.Mod
@@ -20,6 +21,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.registry.GameRegistry
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import org.apache.logging.log4j.Logger
 import java.io.File
 
@@ -37,7 +40,7 @@ import java.io.File
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Underdog Flora"
-    const val VERSION = "2.0"
+    const val VERSION = "2.1"
     const val DEPENDENCIES = "required-after:forgelin@[1.8.4,);before:simpledifficulty"
     const val ACCEPTED_MINECRAFT_VERSIONS = "[1.12,1.12.2,)"
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
@@ -101,4 +104,21 @@ object BackportedFlora {
         LOGGER.info("Registering sounds")
         ModSoundEvents.register(event.registry)
     }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    @JvmStatic
+    fun onRegisterBlockColorHandlers(event: ColorHandlerEvent.Block) {
+        LOGGER.info("Registering Block Color Handlers")
+        proxy.registerBlockColourHandlers(ModBlocks.blockGrass, event)
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    @JvmStatic
+    fun onRegisterItemColorHandlers(event: ColorHandlerEvent.Item) {
+        LOGGER.info("Registering Item Color Handlers")
+        proxy.registerItemColourHandlers(ModBlocks.blockGrass.itemBlock, event)
+    }
+
 }

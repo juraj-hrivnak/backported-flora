@@ -2,6 +2,8 @@ package azmalent.backportedflora.proxy
 
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraft.item.ItemBlock
+import net.minecraft.item.ItemStack
 import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
@@ -36,4 +38,9 @@ class ServerProxy : IProxy {
     override fun registerBlockColourHandlers(block: Block, event: ColorHandlerEvent.Block) {
         throw IProxy.WrongSideException("Tried to call ${::registerBlockColourHandlers.name} on server")
     }
+
+    override fun registerItemColourHandlers(item: Item, event: ColorHandlerEvent.Item) {
+        throw IProxy.WrongSideException("Tried to call ${::registerItemColourHandlers.name} on server")
+    }
+
 }

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 
 abstract class AbstractFlower(name: String, val config: ModConfig.FloraConfig) : BlockBush(Material.PLANTS) {
-    private lateinit var itemBlock: Item
+    lateinit var itemBlock: Item
 
     init {
         setRegistryName(name)

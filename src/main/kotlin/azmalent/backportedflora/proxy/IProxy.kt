@@ -18,4 +18,6 @@ interface IProxy {
     fun registerItemBlockRenderer(itemBlock: Item, meta: Int, id: String)
 
     fun registerBlockColourHandlers(block: Block, event: ColorHandlerEvent.Block)
+    fun registerItemColourHandlers(item: Item, event: ColorHandlerEvent.Item)
+
 }

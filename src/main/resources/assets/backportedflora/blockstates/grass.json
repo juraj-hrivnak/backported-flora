@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0,top=true": { "model": "backportedflora:grass/grass_0" },
+    "age=1,top=true": { "model": "backportedflora:grass/grass_1" },
+    "age=2,top=true": { "model": "backportedflora:grass/grass_2" },
+    "age=3,top=true": { "model": "backportedflora:grass/grass_3" },
+
+    "age=0,top=false": { "model": "backportedflora:grass/grass_bottom" },
+    "age=1,top=false": { "model": "backportedflora:grass/grass_bottom" },
+    "age=2,top=false": { "model": "backportedflora:grass/grass_bottom" },
+    "age=3,top=false": { "model": "backportedflora:grass/grass_bottom" }
+  }
+}

@@ -2,25 +2,46 @@ package azmalent.backportedflora
 
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.common.config.Config
 import net.minecraftforge.common.config.Configuration
 
+
 object ModConfig {
-    abstract class FloraConfig(var enabled: Boolean, var generationChance: Float, var patchAttempts: Int, var plantAttempts: Int) {
+
+    abstract class FloraConfig(
+        var enabled: Boolean,
+        var generationChance: Float,
+        var patchAttempts: Int,
+        var plantAttempts: Int
+    ) {
         abstract val name: String
 
         open fun init(config: Configuration) {
             val lowerCaseName = name.toLowerCase()
 
+            @Config.Name("Enabled")
             enabled = config.getBoolean("Enabled", name, enabled, "Whether $lowerCaseName is registered.")
-            generationChance = config.getFloat("Generation Chance", name,
-                    generationChance, 0.0f, 1.0f,
-                    "The chance to attempt generating $lowerCaseName in a given chunk.")
-            patchAttempts = config.getInt("Patch Generation Attempts", name,
-                    patchAttempts, 0, 16,
-                    "Attempts to generate a $lowerCaseName patch in a given chunk.")
-            plantAttempts = config.getInt("Plant Generation Attempts", name,
-                    plantAttempts, 0, 64,
-                    "Attempts to generate a $lowerCaseName in every patch.")
+
+            @Config.Name("Generation Chance")
+            generationChance = config.getFloat(
+                "Generation Chance", name,
+                generationChance, 0.0f, 1.0f,
+                "The chance to attempt generating $lowerCaseName in a given chunk."
+            )
+
+            @Config.Name("Patch Generation Attempts")
+            patchAttempts = config.getInt(
+                "Patch Generation Attempts", name,
+                patchAttempts, 0, 16,
+                "Attempts to generate a $lowerCaseName patch in a given chunk."
+            )
+
+            @Config.Name("Plant Generation Attempts")
+            plantAttempts = config.getInt(
+                "Plant Generation Attempts", name,
+                plantAttempts, 0, 64,
+                "Attempts to generate a $lowerCaseName in every patch."
+            )
         }
     }
 
@@ -36,15 +57,23 @@ object ModConfig {
 
             val lowerCaseName = name.toLowerCase()
 
-            dimensionBlacklist = config.getStringList("Dimension Blacklist", name, dimensionBlacklist,
-                    "Dimension names (i.e. 'twilight_forest') where $lowerCaseName will not generate.")
-            dimensionBlacklistIsWhitelist = config.getBoolean("Dimension Blacklist Is Whitelist", name, dimensionBlacklistIsWhitelist,
-                    "Whether dimension blacklist is a whitelist.")
+            dimensionBlacklist = config.getStringList(
+                "Dimension Blacklist", name, dimensionBlacklist,
+                "Dimension names (i.e. 'twilight_forest') where $lowerCaseName will not generate."
+            )
+            dimensionBlacklistIsWhitelist = config.getBoolean(
+                "Dimension Blacklist Is Whitelist", name, dimensionBlacklistIsWhitelist,
+                "Whether dimension blacklist is a whitelist."
+            )
 
-            biomeBlacklist = config.getStringList("Biome Blacklist", name, biomeBlacklist,
-                    "Biome IDs (i.e. 'minecraft:savanna') where $lowerCaseName will not generate.")
-            biomeBlacklistIsWhitelist = config.getBoolean("Biome Blacklist Is Whitelist", name, biomeBlacklistIsWhitelist,
-                    "Whether biome blacklist is a whitelist.")
+            biomeBlacklist = config.getStringList(
+                "Biome Blacklist", name, biomeBlacklist,
+                "Biome IDs (i.e. 'minecraft:savanna') where $lowerCaseName will not generate."
+            )
+            biomeBlacklistIsWhitelist = config.getBoolean(
+                "Biome Blacklist Is Whitelist", name, biomeBlacklistIsWhitelist,
+                "Whether biome blacklist is a whitelist."
+            )
         }
 
         fun canGenerate(world: World, pos: BlockPos): Boolean {
@@ -70,9 +99,11 @@ object ModConfig {
         override fun init(config: Configuration) {
             super.init(config)
 
-            generatesUnderground = config.getBoolean("Generates Underground", name, generatesUnderground,
+            generatesUnderground = config.getBoolean(
+                "Generates Underground", name, generatesUnderground,
                 "Whether ${name.toLowerCase()} can generate underground. " +
-                "This is mostly useful if you have mods like Yung's Better Caves which add flooded caverns.")
+                        "This is mostly useful if you have mods like Yung's Better Caves which add flooded caverns."
+            )
         }
     }
 
@@ -86,14 +117,20 @@ object ModConfig {
         override fun init(config: Configuration) {
             super.init(config)
 
-            growthEnabled = config.getBoolean("Growth Enabled", name, growthEnabled,
-                    "Should kelp grow on its own")
-            driedKelpEnabled = config.getBoolean("Dried Kelp", name, driedKelpEnabled,
-                    "Whether dried kelp is enabled.\n" +
-                            "Dried kelp is a food item that can be eaten quickly.\n" +
-                            "You can also craft it into blocks that can be used as fuel.")
-            kelpSoupEnabled = config.getBoolean("Kelp Soup", name, kelpSoupEnabled,
-                    "Whether kelp can be cooked into delicious soup")
+            growthEnabled = config.getBoolean(
+                "Growth Enabled", name, growthEnabled,
+                "Should kelp grow on its own"
+            )
+            driedKelpEnabled = config.getBoolean(
+                "Dried Kelp", name, driedKelpEnabled,
+                "Whether dried kelp is enabled.\n" +
+                        "Dried kelp is a food item that can be eaten quickly.\n" +
+                        "You can also craft it into blocks that can be used as fuel."
+            )
+            kelpSoupEnabled = config.getBoolean(
+                "Kelp Soup", name, kelpSoupEnabled,
+                "Whether kelp can be cooked into delicious soup"
+            )
         }
 
     }
@@ -119,8 +156,10 @@ object ModConfig {
         override fun init(config: Configuration) {
             super.init(config)
 
-            causesWither = config.getBoolean("Wither Roses Cause Wither", name, causesWither,
-                    "Should wither roses apply wither to touching entities?")
+            causesWither = config.getBoolean(
+                "Wither Roses Cause Wither", name, causesWither,
+                "Should wither roses apply wither to touching entities?"
+            )
 
             dropFromWitherKills = config.getBoolean("Drop From Wither Kills", name, dropFromWitherKills, "Should wither roses drop from wither kills?")
         }

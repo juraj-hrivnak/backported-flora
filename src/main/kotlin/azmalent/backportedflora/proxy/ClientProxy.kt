@@ -8,7 +8,10 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
 import net.minecraft.client.renderer.color.BlockColors
 import net.minecraft.client.renderer.color.IBlockColor
+import net.minecraft.client.renderer.color.IItemColor
 import net.minecraft.item.Item
+import net.minecraft.item.ItemBlock
+import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.ColorizerGrass
 import net.minecraft.world.IBlockAccess
@@ -67,4 +70,16 @@ class ClientProxy : IProxy {
         )
         blockColors.registerBlockColorHandler(grassColourHandler, block)
     }
+
+    override fun registerItemColourHandlers(item: Item, event: ColorHandlerEvent.Item) {
+        val blockColors = event.blockColors
+        val itemColors = event.itemColors
+        val itemBlockColourHandler = IItemColor { stack: ItemStack, tintIndex: Int ->
+            @Suppress("DEPRECATION")
+            val state = (stack.item as ItemBlock).block.getStateFromMeta(stack.metadata)
+            blockColors.colorMultiplier(state, null, null, tintIndex)
+        }
+        itemColors.registerItemColorHandler(itemBlockColourHandler, item)
+    }
+
 }

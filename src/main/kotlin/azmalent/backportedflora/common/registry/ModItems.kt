@@ -1,6 +1,7 @@
 package azmalent.backportedflora.common.registry
 
 import azmalent.backportedflora.ModConfig
+import azmalent.backportedflora.common.block.crop.ItemBlockCattail
 import azmalent.backportedflora.common.item.ItemDriedKelp
 import azmalent.backportedflora.common.item.ItemKelpSoup
 import azmalent.backportedflora.common.item.ItemModIcon
@@ -15,6 +16,7 @@ object ModItems {
     val itemModIcon = ItemModIcon()
     val itemKelpSoup = ItemKelpSoup()
     val itemDriedKelp = ItemDriedKelp()
+    val itemBlockCattail = ItemBlockCattail()
 
     fun register(registry: IForgeRegistry<Item>) {
         registry.register(itemModIcon)
@@ -23,6 +25,8 @@ object ModItems {
             if (ModConfig.Kelp.kelpSoupEnabled) registry.register(itemKelpSoup)
             if (ModConfig.Kelp.driedKelpEnabled) registry.register(itemDriedKelp)
         }
+
+        registry.register(itemBlockCattail)
     }
 
     @SideOnly(Side.CLIENT)
@@ -33,6 +37,8 @@ object ModItems {
             if (ModConfig.Kelp.kelpSoupEnabled) itemKelpSoup.registerItemModel()
             if (ModConfig.Kelp.driedKelpEnabled) itemDriedKelp.registerItemModel()
         }
+
+        itemBlockCattail.registerItemModel()
     }
 
     fun initOreDictionary() {
