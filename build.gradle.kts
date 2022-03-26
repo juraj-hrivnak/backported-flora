@@ -88,7 +88,7 @@ dependencies {
     compile("net.shadowfacts:Forgelin:1.8.4")
     compile("curse.maven:simpledifficulty-574162:3645250")
     compile("curse.maven:dynamictrees-252818:3613721")
-    compile("curse.maven:sereneseasons-291874:2799213")
+//    compile("curse.maven:sereneseasons-291874:2799213")
 //    compile("curse.maven:bop-220318:2842510")
 }
 

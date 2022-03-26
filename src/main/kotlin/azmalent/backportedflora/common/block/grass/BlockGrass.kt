@@ -16,7 +16,6 @@ import net.minecraft.init.Blocks
 import net.minecraft.init.SoundEvents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
-import net.minecraft.item.ItemSpade
 import net.minecraft.item.ItemStack
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.EnumFacing
@@ -112,7 +111,7 @@ class BlockGrass : Block(Material.GRASS), IGrowable {
         hitZ: Float
     ): Boolean {
         val itemStack: ItemStack = playerIn.getHeldItem(hand)
-        return if (itemStack.item is ItemSpade) {
+        return if ("shovel" in itemStack.item.translationKey) {
             val path = Blocks.GRASS_PATH.defaultState
             worldIn.playSound(playerIn, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0f, 1.0f)
 

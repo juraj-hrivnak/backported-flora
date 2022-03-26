@@ -9,6 +9,7 @@ import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
@@ -81,7 +82,7 @@ abstract class AbstractTallGrass(name: String) : BlockCrops() {
     }
 
     override fun canSustainBush(state: IBlockState): Boolean {
-        return true
+        return false
     }
 
 
@@ -136,9 +137,9 @@ abstract class AbstractTallGrass(name: String) : BlockCrops() {
         val down = worldIn.getBlockState(pos.down())
         val down2 = worldIn.getBlockState(pos.down(2))
 
-        return if (down.material in ALLOWED_SOILS) {
-            true
-        } else down.block == this && getAge(down) == this.maxAge && down2.material in ALLOWED_SOILS
+        if (down.material in ALLOWED_SOILS || down.block == Blocks.DIRT) {
+            return true
+        } else return down.block == this && getAge(down) == this.maxAge && return down2.material in ALLOWED_SOILS || down2.block == Blocks.DIRT
     }
 
 
