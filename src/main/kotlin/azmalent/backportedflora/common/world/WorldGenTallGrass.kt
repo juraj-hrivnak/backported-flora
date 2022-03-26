@@ -19,7 +19,7 @@ class WorldGenTallGrass : IWorldGenerator {
         val grassPerChunk = if (biome.decorator.grassPerChunk > 1) biome.decorator.grassPerChunk else when {
             BiomeDictionary.hasType(biome, BiomeDictionary.Type.DENSE) -> 10
             BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE) -> 15
-            else -> 1
+            else -> 3
         }
 
         if (world.worldType != WorldType.FLAT) {
