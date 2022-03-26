@@ -30,7 +30,7 @@ abstract class AbstractTallGrass(name: String) : BlockCrops() {
 
     companion object {
         val ALLOWED_SOILS = setOf<Material>(
-            Material.GROUND, Material.GRASS
+            Material.GRASS
         )
         val GRASS_TOP_AABB = arrayOf(
             AxisAlignedBB(0.10000001192092896, 0.025, 0.10000001192092896, 0.899999988079071, 0.5, 0.899999988079071),
