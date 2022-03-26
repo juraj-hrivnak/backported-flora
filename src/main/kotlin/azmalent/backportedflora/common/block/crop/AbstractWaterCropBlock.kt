@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
+import java.util.*
 
 abstract class AbstractWaterCropBlock(name: String) : BlockCrops() {
 
@@ -55,6 +56,16 @@ abstract class AbstractWaterCropBlock(name: String) : BlockCrops() {
 
     override fun canSustainBush(state: IBlockState): Boolean {
         return true
+    }
+
+    override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {
+        if (!worldIn.isAreaLoaded(pos, 1)) return
+        if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
+            val age = getAge(state)
+            if (age < this.maxAge && rand.nextDouble() < 0.14) {
+                grow(worldIn, pos, state)
+            }
+        }
     }
 
     override fun addCollisionBoxToList(

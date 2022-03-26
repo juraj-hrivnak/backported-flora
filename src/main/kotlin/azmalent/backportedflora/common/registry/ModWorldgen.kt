@@ -3,7 +3,6 @@ package azmalent.backportedflora.common.registry
 import azmalent.backportedflora.ModConfig
 import azmalent.backportedflora.common.block.flower.AbstractFlower
 import azmalent.backportedflora.common.world.*
-import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.registry.GameRegistry
 
 object ModWorldgen {
@@ -18,9 +17,9 @@ object ModWorldgen {
     fun register() {
         if (ModConfig.Seagrass.enabled) GameRegistry.registerWorldGenerator(WorldGenSeagrass(), 0)
 
-        if (Loader.isModLoaded("simpledifficulty")) {
-            GameRegistry.registerWorldGenerator(WorldGenRivergrass(), 0)
-        }
+        GameRegistry.registerWorldGenerator(WorldGenRivergrass(), 0)
+        GameRegistry.registerWorldGenerator(WorldGenTallGrass(), 0)
+
 
         GameRegistry.registerWorldGenerator(WorldGenCattail(), 0)
 

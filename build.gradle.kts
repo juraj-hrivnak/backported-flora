@@ -87,6 +87,9 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50")
     compile("net.shadowfacts:Forgelin:1.8.4")
     compile("curse.maven:simpledifficulty-574162:3645250")
+    compile("curse.maven:dynamictrees-252818:3613721")
+    compile("curse.maven:sereneseasons-291874:2799213")
+//    compile("curse.maven:bop-220318:2842510")
 }
 
 
@@ -97,6 +100,7 @@ tasks.withType<Jar> {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
 
+    @Suppress("DEPRECATION")
     baseName = modBaseName
 
     // replace stuff in mcmod.info, nothing else

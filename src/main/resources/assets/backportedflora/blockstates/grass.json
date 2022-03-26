@@ -1,13 +1,33 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "blocks/dirt",
+      "bottom": "blocks/dirt",
+      "side": "blocks/dirt",
+      "top": "blocks/grass_top"
+    }
+  },
   "variants": {
-    "age=0,top=true": { "model": "backportedflora:grass/grass_0" },
-    "age=1,top=true": { "model": "backportedflora:grass/grass_1" },
-    "age=2,top=true": { "model": "backportedflora:grass/grass_2" },
-    "age=3,top=true": { "model": "backportedflora:grass/grass_3" },
-
-    "age=0,top=false": { "model": "backportedflora:grass/grass_bottom" },
-    "age=1,top=false": { "model": "backportedflora:grass/grass_bottom" },
-    "age=2,top=false": { "model": "backportedflora:grass/grass_bottom" },
-    "age=3,top=false": { "model": "backportedflora:grass/grass_bottom" }
+    "snowy": {
+      "false": {
+        "model": "backportedflora:grass",
+        "textures": {
+          "overlay": "backportedflora:blocks/grass_side_overlay"
+        }
+      },
+      "true": {
+        "model": "backportedflora:grass_snowy",
+        "textures": {
+          "overlay": "backportedflora:blocks/grass_snowed_side_overlay"
+        }
+      }
+    },
+    "inventory": {
+      "model": "backportedflora:grass",
+      "textures": {
+        "overlay": "backportedflora:blocks/grass_side_overlay"
+      }
+    }
   }
 }

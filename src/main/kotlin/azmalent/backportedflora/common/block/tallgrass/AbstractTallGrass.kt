@@ -1,8 +1,6 @@
-package azmalent.backportedflora.common.block.grass
+package azmalent.backportedflora.common.block.tallgrass
 
 import azmalent.backportedflora.BackportedFlora
-import azmalent.backportedflora.common.block.plant.saltwater.BlockKelp
-import com.charles445.simpledifficulty.api.SDFluids
 import net.minecraft.block.Block
 import net.minecraft.block.BlockCrops
 import net.minecraft.block.SoundType
@@ -10,10 +8,15 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.properties.PropertyInteger
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.Entity
-import net.minecraft.entity.item.EntityBoat
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
+import net.minecraft.item.ItemStack
+import net.minecraft.stats.StatList
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.NonNullList
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
@@ -23,11 +26,11 @@ import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
-abstract class AbstractGrass(name: String) : BlockCrops() {
+abstract class AbstractTallGrass(name: String) : BlockCrops() {
 
     companion object {
         val ALLOWED_SOILS = setOf<Material>(
-            Material.GROUND, Material.SAND, Material.GRASS, Material.CLAY, Material.ROCK
+            Material.GROUND, Material.GRASS
         )
         val GRASS_TOP_AABB = arrayOf(
             AxisAlignedBB(0.10000001192092896, 0.025, 0.10000001192092896, 0.899999988079071, 0.5, 0.899999988079071),
@@ -81,6 +84,7 @@ abstract class AbstractGrass(name: String) : BlockCrops() {
         return true
     }
 
+
     override fun updateTick(worldIn: World, pos: BlockPos, state: IBlockState, rand: Random) {
         if (!worldIn.isAreaLoaded(pos, 1)) return
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
@@ -88,20 +92,6 @@ abstract class AbstractGrass(name: String) : BlockCrops() {
             if (age <= this.maxAge && rand.nextDouble() < 0.14) {
                 grow(worldIn, pos, state)
             }
-        }
-    }
-
-    override fun addCollisionBoxToList(
-        state: IBlockState,
-        worldIn: World,
-        pos: BlockPos,
-        entityBox: AxisAlignedBB,
-        collidingBoxes: List<AxisAlignedBB?>,
-        entityIn: Entity?,
-        isActualState: Boolean
-    ) {
-        if (entityIn !is EntityBoat) {
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, NULL_AABB)
         }
     }
 
@@ -121,9 +111,9 @@ abstract class AbstractGrass(name: String) : BlockCrops() {
         return false
     }
 
-    override fun onEntityCollision(worldIn: World?, pos: BlockPos?, state: IBlockState?, entityIn: Entity) {
-        entityIn.motionX = entityIn.motionX / 1.1
-        entityIn.motionZ = entityIn.motionZ / 1.1
+    override fun onEntityCollision(worldIn: World?, pos: BlockPos?, state: IBlockState, entityIn: Entity) {
+        entityIn.motionX = entityIn.motionX / ((getAge(state) + 1) * 0.1 + 1)
+        entityIn.motionZ = entityIn.motionZ / ((getAge(state) + 1) * 0.1 + 1)
     }
 
     override fun neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromPos: BlockPos) {
@@ -133,6 +123,7 @@ abstract class AbstractGrass(name: String) : BlockCrops() {
         }
     }
 
+    // Placement
     override fun canPlaceBlockOnSide(worldIn: World, pos: BlockPos, side: EnumFacing): Boolean {
         return canBlockStay(worldIn, pos, defaultState)
     }
@@ -151,7 +142,7 @@ abstract class AbstractGrass(name: String) : BlockCrops() {
     }
 
 
-    // Crop implementation
+    // Growing
     override fun getBonemealAgeIncrease(worldIn: World): Int {
         return super.getBonemealAgeIncrease(worldIn) / this.maxAge
     }
@@ -170,6 +161,45 @@ abstract class AbstractGrass(name: String) : BlockCrops() {
             }
         }
         worldIn.setBlockState(pos, withAge(newAge), 2)
+    }
+
+
+    // Drops
+    override fun getDrops(
+        drops: NonNullList<ItemStack?>,
+        world: IBlockAccess?,
+        pos: BlockPos?,
+        state: IBlockState?,
+        fortune: Int
+    ) {
+        if (RANDOM.nextInt(8) != 0) return
+        val seed = ForgeHooks.getGrassSeed(RANDOM, fortune)
+        if (!seed.isEmpty) drops.add(seed)
+    }
+
+    override fun getItemDropped(state: IBlockState?, rand: Random?, fortune: Int): Item? {
+        return null
+    }
+
+    override fun quantityDroppedWithBonus(fortune: Int, random: Random): Int {
+        return 1 + random.nextInt(fortune * 2 + 1)
+    }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    override fun harvestBlock(
+        worldIn: World,
+        player: EntityPlayer,
+        pos: BlockPos,
+        state: IBlockState,
+        te: TileEntity?,
+        stack: ItemStack
+    ) {
+        if (!worldIn.isRemote && stack.item === Items.SHEARS) {
+            player.addStat(StatList.getBlockStats(this))
+            spawnAsEntity(worldIn, pos, ItemStack(this, 1))
+        } else {
+            super.harvestBlock(worldIn, player, pos, state, te, stack)
+        }
     }
 
 }

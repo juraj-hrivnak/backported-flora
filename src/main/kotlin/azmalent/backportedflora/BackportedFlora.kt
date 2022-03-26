@@ -8,12 +8,14 @@ import azmalent.backportedflora.common.registry.ModItems
 import azmalent.backportedflora.common.registry.ModSoundEvents
 import azmalent.backportedflora.common.registry.ModWorldgen
 import azmalent.backportedflora.proxy.IProxy
+import com.ferreusveritas.dynamictrees.systems.DirtHelper
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.util.SoundEvent
 import net.minecraftforge.client.event.ColorHandlerEvent
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
@@ -41,7 +43,7 @@ object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Underdog Flora"
     const val VERSION = "2.1"
-    const val DEPENDENCIES = "required-after:forgelin@[1.8.4,);before:simpledifficulty"
+    const val DEPENDENCIES = "required-after:forgelin@[1.8.4,);before:simpledifficulty;after:dynamictrees"
     const val ACCEPTED_MINECRAFT_VERSIONS = "[1.12,1.12.2,)"
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
 
@@ -50,6 +52,8 @@ object BackportedFlora {
     const val CLIENT_PROXY = "azmalent.backportedflora.proxy.ClientProxy"
 
     val creativeTab = ModCreativeTab()
+
+    fun isDynamicTreesLoaded(): Boolean = (Loader.isModLoaded("dynamictrees"))
 
     @SidedProxy(serverSide = SERVER_PROXY, clientSide = CLIENT_PROXY)
     lateinit var proxy: IProxy
@@ -88,6 +92,9 @@ object BackportedFlora {
     fun onRegisterBlocks(event: RegistryEvent.Register<Block>) {
         LOGGER.info("Registering blocks")
         ModBlocks.register(event.registry)
+        if (isDynamicTreesLoaded()) {
+            DirtHelper.registerSoil(ModBlocks.blockGrass, DirtHelper.DIRTLIKE)
+        }
     }
 
     @SubscribeEvent
@@ -110,6 +117,7 @@ object BackportedFlora {
     @JvmStatic
     fun onRegisterBlockColorHandlers(event: ColorHandlerEvent.Block) {
         LOGGER.info("Registering Block Color Handlers")
+        proxy.registerBlockColourHandlers(ModBlocks.blockTallGrass, event)
         proxy.registerBlockColourHandlers(ModBlocks.blockGrass, event)
     }
 
@@ -118,6 +126,7 @@ object BackportedFlora {
     @JvmStatic
     fun onRegisterItemColorHandlers(event: ColorHandlerEvent.Item) {
         LOGGER.info("Registering Item Color Handlers")
+        proxy.registerItemColourHandlers(ModBlocks.blockTallGrass.itemBlock, event)
         proxy.registerItemColourHandlers(ModBlocks.blockGrass.itemBlock, event)
     }
 

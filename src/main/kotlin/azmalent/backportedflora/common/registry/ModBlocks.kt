@@ -1,10 +1,8 @@
 package azmalent.backportedflora.common.registry
 
-import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.ModConfig
-import azmalent.backportedflora.common.block.crop.BlockCattail
 import azmalent.backportedflora.common.block.BlockDriedKelp
-import azmalent.backportedflora.common.block.crop.ItemBlockCattail
+import azmalent.backportedflora.common.block.crop.BlockCattail
 import azmalent.backportedflora.common.block.flower.BlockCornflower
 import azmalent.backportedflora.common.block.flower.BlockLilyOfTheValley
 import azmalent.backportedflora.common.block.flower.BlockWitherRose
@@ -12,6 +10,7 @@ import azmalent.backportedflora.common.block.grass.BlockGrass
 import azmalent.backportedflora.common.block.plant.freshwater.BlockRivergrass
 import azmalent.backportedflora.common.block.plant.saltwater.BlockKelp
 import azmalent.backportedflora.common.block.plant.saltwater.BlockSeagrass
+import azmalent.backportedflora.common.block.tallgrass.BlockTallGrass
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraftforge.fml.relauncher.Side
@@ -28,6 +27,7 @@ object ModBlocks {
     val blockWitherRose = BlockWitherRose()
     val blockDriedKelp = BlockDriedKelp()
     val blockCattail = BlockCattail()
+    val blockTallGrass = BlockTallGrass()
     val blockGrass = BlockGrass()
 
     fun register(registry: IForgeRegistry<Block>) {
@@ -35,7 +35,9 @@ object ModBlocks {
 
         registry.register(blockRivergrass)
         registry.register(blockCattail)
+        registry.register(blockTallGrass)
         registry.register(blockGrass)
+
 
         if (ModConfig.Kelp.enabled) {
             registry.register(blockKelp)
@@ -53,6 +55,7 @@ object ModBlocks {
         if (ModConfig.Seagrass.enabled) registry.register(blockSeagrass.createItemBlock())
 
         registry.register(blockRivergrass.createItemBlock())
+        registry.register(blockTallGrass.createItemBlock())
         registry.register(blockGrass.createItemBlock())
 
 
@@ -74,6 +77,7 @@ object ModBlocks {
         if (ModConfig.Seagrass.enabled) blockSeagrass.registerItemModel()
 
         blockRivergrass.registerItemModel()
+        blockTallGrass.registerItemModel()
         blockGrass.registerItemModel()
 
         if (ModConfig.Kelp.enabled) {

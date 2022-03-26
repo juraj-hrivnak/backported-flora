@@ -1,6 +1,6 @@
 {
     "parent": "backportedflora:block/cross",
     "textures": {
-        "cross": "backportedflora:blocks/grass/grass_1"
+        "cross": "backportedflora:blocks/tallgrass/grass_2"
     }
 }
