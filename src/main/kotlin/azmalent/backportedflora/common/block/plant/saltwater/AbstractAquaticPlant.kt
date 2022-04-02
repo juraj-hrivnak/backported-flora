@@ -3,6 +3,7 @@ package azmalent.backportedflora.common.block.plant.saltwater
 import azmalent.backportedflora.BackportedFlora
 import azmalent.backportedflora.client.ModSoundTypes
 import com.charles445.simpledifficulty.api.SDFluids
+import git.jbredwards.fluidlogged_api.api.block.IFluidloggable
 import net.minecraft.block.Block
 import net.minecraft.block.IGrowable
 import net.minecraft.block.material.MapColor
@@ -17,11 +18,13 @@ import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraft.world.World
+import net.minecraftforge.fml.common.Optional
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
-abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapColor.WATER), IGrowable {
+@Optional.Interface(iface = "git.jbredwards.fluidlogged_api.api.block.IFluidloggable", modid = "fluidlogged_api")
+abstract class AbstractAquaticPlant(name: String) : Block(Material.WATER, MapColor.WATER), IGrowable, IFluidloggable {
     companion object {
         val ALLOWED_SOILS = setOf<Material>(
                 Material.GROUND, Material.SAND, Material.GRASS, Material.CLAY, Material.ROCK
