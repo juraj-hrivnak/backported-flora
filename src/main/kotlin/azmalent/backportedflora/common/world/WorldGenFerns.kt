@@ -57,13 +57,13 @@ class WorldGenFerns : IWorldGenerator {
         )
 
         if (ModBlocks.blockTallFern.canBlockStay(world, pos, state)) {
-            world.setBlockState(pos, state, 3)
+            world.setBlockState(pos, state, 2)
 
             if (rand.nextDouble() < 0.2) {
-                world.setBlockState(pos, maxState, 3)
+                world.setBlockState(pos, maxState, 2)
 
                 if (world.isAirBlock(pos.up()) && ModBlocks.blockTallFern.canBlockStay(world, pos.up(), state)) {
-                    world.setBlockState(pos.up(), state, 3)
+                    world.setBlockState(pos.up(), state, 2)
                 }
             }
         }
