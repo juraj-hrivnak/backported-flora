@@ -1,0 +1,6 @@
+{
+    "parent": "backportedflora:block/cross",
+    "textures": {
+        "cross": "backportedflora:blocks/tallfern/single/grass_0"
+    }
+}

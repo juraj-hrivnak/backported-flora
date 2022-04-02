@@ -10,7 +10,7 @@ import net.minecraft.world.gen.IChunkGenerator
 import net.minecraftforge.common.BiomeDictionary
 import java.util.*
 
-class WorldGenTallGrass : AbstractGrassGenerator() {
+class WorldGenFerns : AbstractGrassGenerator() {
     override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
         val chunkPos = world.getChunk(chunkX, chunkZ).pos
         val biome = WorldGenUtil.getBiomeInChunk(world, chunkX, chunkZ)
@@ -19,7 +19,7 @@ class WorldGenTallGrass : AbstractGrassGenerator() {
             if (BiomeDictionary.hasType(biome, type)) {
                 for (i in 0..16 * value) {
                     val pos = getGenerationPos(world, rand, chunkPos)
-                    generateTallGrass(world, rand, pos)
+                    generateFerns(world, rand, pos)
                 }
             }
         }
@@ -35,7 +35,7 @@ class WorldGenTallGrass : AbstractGrassGenerator() {
         return chunkPos.getBlock(0, 0, 0).add(x, y, z)
     }
 
-    private fun generateTallGrass(world: World, rand: Random, targetPos: BlockPos) {
+    private fun generateFerns(world: World, rand: Random, targetPos: BlockPos) {
         for (i in 0..64) {
             val pos = targetPos.add(
                 rand.nextInt(8) - rand.nextInt(8),
@@ -46,30 +46,30 @@ class WorldGenTallGrass : AbstractGrassGenerator() {
             if (!world.isBlockLoaded(pos)) continue
 
             if (world.isAirBlock(pos)) {
-                placeTallGrass(world, pos, rand)
+                placeFern(world, pos, rand)
             }
         }
     }
 
-    private fun placeTallGrass(world: World, pos: BlockPos, rand: Random) {
-        val startingAge = rand.nextInt(ModBlocks.blockTallGrass.maxAge)
-        val state =
-            ModBlocks.blockTallGrass.defaultState.withProperty(ModBlocks.blockTallGrass.ageProperty, startingAge)
-        val maxState = ModBlocks.blockTallGrass.defaultState.withProperty(
-            ModBlocks.blockTallGrass.ageProperty,
-            ModBlocks.blockTallGrass.maxAge
+    private fun placeFern(world: World, pos: BlockPos, rand: Random) {
+        val startingAge = rand.nextInt(ModBlocks.blockTallFern.maxAge)
+        val state = ModBlocks.blockTallFern.defaultState.withProperty(ModBlocks.blockTallFern.ageProperty, startingAge)
+        val maxState = ModBlocks.blockTallFern.defaultState.withProperty(
+            ModBlocks.blockTallFern.ageProperty,
+            ModBlocks.blockTallFern.maxAge
         )
 
-        if (ModBlocks.blockTallGrass.canBlockStay(world, pos, state)) {
-            world.setBlockState(pos, state, 2)
+        if (ModBlocks.blockTallFern.canBlockStay(world, pos, state)) {
+            world.setBlockState(pos, state, 3)
 
-            if (rand.nextDouble() < 0.05) {
-                world.setBlockState(pos, maxState, 2)
+            if (rand.nextDouble() < 0.2) {
+                world.setBlockState(pos, maxState, 3)
 
-                if (world.isAirBlock(pos.up()) && ModBlocks.blockTallGrass.canBlockStay(world, pos.up(), state)) {
-                    world.setBlockState(pos.up(), state, 2)
+                if (world.isAirBlock(pos.up()) && ModBlocks.blockTallFern.canBlockStay(world, pos.up(), state)) {
+                    world.setBlockState(pos.up(), state, 3)
                 }
             }
         }
     }
 }
+

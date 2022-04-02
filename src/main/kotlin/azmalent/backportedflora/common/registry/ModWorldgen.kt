@@ -19,7 +19,7 @@ object ModWorldgen {
 
         GameRegistry.registerWorldGenerator(WorldGenRivergrass(), 0)
         GameRegistry.registerWorldGenerator(WorldGenTallGrass(), 0)
-
+        GameRegistry.registerWorldGenerator(WorldGenFerns(), 0)
 
         GameRegistry.registerWorldGenerator(WorldGenCattail(), 0)
 

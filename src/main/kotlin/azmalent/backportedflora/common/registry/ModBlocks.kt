@@ -10,6 +10,7 @@ import azmalent.backportedflora.common.block.grass.BlockGrass
 import azmalent.backportedflora.common.block.plant.freshwater.BlockRivergrass
 import azmalent.backportedflora.common.block.plant.saltwater.BlockKelp
 import azmalent.backportedflora.common.block.plant.saltwater.BlockSeagrass
+import azmalent.backportedflora.common.block.tallgrass.BlockTallFern
 import azmalent.backportedflora.common.block.tallgrass.BlockTallGrass
 import net.minecraft.block.Block
 import net.minecraft.item.Item
@@ -27,16 +28,18 @@ object ModBlocks {
     val blockWitherRose = BlockWitherRose()
     val blockDriedKelp = BlockDriedKelp()
     val blockCattail = BlockCattail()
-    val blockTallGrass = BlockTallGrass()
     val blockGrass = BlockGrass()
+    val blockTallGrass = BlockTallGrass()
+    val blockTallFern = BlockTallFern()
 
     fun register(registry: IForgeRegistry<Block>) {
         if (ModConfig.Seagrass.enabled) registry.register(blockSeagrass)
 
         registry.register(blockRivergrass)
         registry.register(blockCattail)
-        registry.register(blockTallGrass)
         registry.register(blockGrass)
+        registry.register(blockTallGrass)
+        registry.register(blockTallFern)
 
 
         if (ModConfig.Kelp.enabled) {
@@ -55,8 +58,9 @@ object ModBlocks {
         if (ModConfig.Seagrass.enabled) registry.register(blockSeagrass.createItemBlock())
 
         registry.register(blockRivergrass.createItemBlock())
-        registry.register(blockTallGrass.createItemBlock())
         registry.register(blockGrass.createItemBlock())
+        registry.register(blockTallGrass.createItemBlock())
+        registry.register(blockTallFern.createItemBlock())
 
 
         if (ModConfig.Kelp.enabled) {
@@ -77,8 +81,9 @@ object ModBlocks {
         if (ModConfig.Seagrass.enabled) blockSeagrass.registerItemModel()
 
         blockRivergrass.registerItemModel()
-        blockTallGrass.registerItemModel()
         blockGrass.registerItemModel()
+        blockTallGrass.registerItemModel()
+        blockTallFern.registerItemModel()
 
         if (ModConfig.Kelp.enabled) {
             blockKelp.registerItemModel()

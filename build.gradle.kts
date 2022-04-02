@@ -79,6 +79,8 @@ repositories {
     maven(url = "http://maven.shadowfacts.net/")
 //  CurseForge
     maven(url = "https://www.cursemaven.com")
+//  Fluidlogged API
+    maven(url = "https://jitpack.io")
 }
 
 @Suppress("DEPRECATION")
@@ -89,7 +91,11 @@ dependencies {
     compile("curse.maven:simpledifficulty-574162:3645250")
     compile("curse.maven:dynamictrees-252818:3613721")
 //    compile("curse.maven:sereneseasons-291874:2799213")
-//    compile("curse.maven:bop-220318:2842510")
+//    compileOnly("curse.maven:bop-220318:2842510")
+
+    // Fluidlogged API
+    compileOnly("com.github.jbredwards:fluidlogged-api:ccf9bba5ec")
+
 }
 
 

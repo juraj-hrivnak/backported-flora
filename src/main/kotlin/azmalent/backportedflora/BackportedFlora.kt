@@ -42,7 +42,7 @@ import java.io.File
 object BackportedFlora {
     const val MODID = "backportedflora"
     const val NAME = "Underdog Flora"
-    const val VERSION = "2.2"
+    const val VERSION = "2.3"
     const val DEPENDENCIES = "required-after:forgelin@[1.8.4,);before:simpledifficulty;after:dynamictrees"
     const val ACCEPTED_MINECRAFT_VERSIONS = "[1.12,1.12.2,)"
     const val ADAPTER = "net.shadowfacts.forgelin.KotlinAdapter"
@@ -98,16 +98,14 @@ object BackportedFlora {
     }
 
     @SubscribeEvent
-    @JvmStatic
-    fun onRegisterItems(event: RegistryEvent.Register<Item>) {
+    @JvmStatic fun onRegisterItems(event: RegistryEvent.Register<Item>) {
         LOGGER.info("Registering items")
         ModBlocks.registerItemBlocks(event.registry)
         ModItems.register(event.registry)
     }
 
     @SubscribeEvent
-    @JvmStatic
-    fun onRegisterSoundEvents(event: RegistryEvent.Register<SoundEvent>) {
+    @JvmStatic fun onRegisterSoundEvents(event: RegistryEvent.Register<SoundEvent>) {
         LOGGER.info("Registering sounds")
         ModSoundEvents.register(event.registry)
     }
@@ -118,6 +116,7 @@ object BackportedFlora {
     fun onRegisterBlockColorHandlers(event: ColorHandlerEvent.Block) {
         LOGGER.info("Registering Block Color Handlers")
         proxy.registerBlockColourHandlers(ModBlocks.blockTallGrass, event)
+        proxy.registerBlockColourHandlers(ModBlocks.blockTallFern, event)
         proxy.registerBlockColourHandlers(ModBlocks.blockGrass, event)
     }
 
@@ -127,6 +126,7 @@ object BackportedFlora {
     fun onRegisterItemColorHandlers(event: ColorHandlerEvent.Item) {
         LOGGER.info("Registering Item Color Handlers")
         proxy.registerItemColourHandlers(ModBlocks.blockTallGrass.itemBlock, event)
+        proxy.registerItemColourHandlers(ModBlocks.blockTallFern.itemBlock, event)
         proxy.registerItemColourHandlers(ModBlocks.blockGrass.itemBlock, event)
     }
 
