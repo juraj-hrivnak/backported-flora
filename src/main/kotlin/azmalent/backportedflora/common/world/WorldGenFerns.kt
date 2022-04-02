@@ -7,21 +7,18 @@ import net.minecraft.util.math.ChunkPos
 import net.minecraft.world.World
 import net.minecraft.world.chunk.IChunkProvider
 import net.minecraft.world.gen.IChunkGenerator
-import net.minecraftforge.common.BiomeDictionary
+import net.minecraftforge.fml.common.IWorldGenerator
 import java.util.*
 
-class WorldGenFerns : AbstractGrassGenerator() {
+class WorldGenFerns : IWorldGenerator {
     override fun generate(rand: Random, chunkX: Int, chunkZ: Int, world: World, chunkGenerator: IChunkGenerator, chunkProvider: IChunkProvider) {
         val chunkPos = world.getChunk(chunkX, chunkZ).pos
         val biome = WorldGenUtil.getBiomeInChunk(world, chunkX, chunkZ)
+        val modifier = if (biome.decorator.grassPerChunk < 3) biome.decorator.grassPerChunk else 3
 
-        chances.forEach { (type, value) ->
-            if (BiomeDictionary.hasType(biome, type)) {
-                for (i in 0..16 * value) {
-                    val pos = getGenerationPos(world, rand, chunkPos)
-                    generateFerns(world, rand, pos)
-                }
-            }
+        for (i in 0..16 * modifier) {
+            val pos = getGenerationPos(world, rand, chunkPos)
+            generateFerns(world, rand, pos)
         }
     }
 
