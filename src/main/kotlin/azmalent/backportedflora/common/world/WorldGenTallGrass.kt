@@ -15,9 +15,10 @@ class WorldGenTallGrass : AbstractGrassGenerator() {
         val chunkPos = world.getChunk(chunkX, chunkZ).pos
         val biome = WorldGenUtil.getBiomeInChunk(world, chunkX, chunkZ)
 
+
         chances.forEach { (type, value) ->
             if (BiomeDictionary.hasType(biome, type)) {
-                for (i in 0..16 * value) {
+                for (i in 0 until 16 * value) {
                     val pos = getGenerationPos(world, rand, chunkPos)
                     generateTallGrass(world, rand, pos)
                 }
@@ -53,12 +54,8 @@ class WorldGenTallGrass : AbstractGrassGenerator() {
 
     private fun placeTallGrass(world: World, pos: BlockPos, rand: Random) {
         val startingAge = rand.nextInt(ModBlocks.blockTallGrass.maxAge)
-        val state =
-            ModBlocks.blockTallGrass.defaultState.withProperty(ModBlocks.blockTallGrass.ageProperty, startingAge)
-        val maxState = ModBlocks.blockTallGrass.defaultState.withProperty(
-            ModBlocks.blockTallGrass.ageProperty,
-            ModBlocks.blockTallGrass.maxAge
-        )
+        val state = ModBlocks.blockTallGrass.defaultState.withProperty(ModBlocks.blockTallGrass.ageProperty, startingAge)
+        val maxState = ModBlocks.blockTallGrass.defaultState.withProperty(ModBlocks.blockTallGrass.ageProperty, ModBlocks.blockTallGrass.maxAge)
 
         if (ModBlocks.blockTallGrass.canBlockStay(world, pos, state)) {
             world.setBlockState(pos, state, 2)

@@ -90,7 +90,7 @@ abstract class AbstractTallGrass(name: String) : BlockCrops() {
         if (!worldIn.isAreaLoaded(pos, 1)) return
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
             val age = getAge(state)
-            if (age <= this.maxAge && rand.nextDouble() < 0.13) {
+            if (age <= this.maxAge && rand.nextDouble() < 0.14) {
                 grow(worldIn, pos, state)
             }
         }

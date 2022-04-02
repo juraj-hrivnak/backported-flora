@@ -17,7 +17,7 @@ class WorldGenFerns : AbstractGrassGenerator() {
 
         chances.forEach { (type, value) ->
             if (BiomeDictionary.hasType(biome, type)) {
-                for (i in 0..16 * value) {
+                for (i in 0 until 16 * value) {
                     val pos = getGenerationPos(world, rand, chunkPos)
                     generateFerns(world, rand, pos)
                 }
@@ -36,7 +36,7 @@ class WorldGenFerns : AbstractGrassGenerator() {
     }
 
     private fun generateFerns(world: World, rand: Random, targetPos: BlockPos) {
-        for (i in 0..64) {
+        for (i in 0..32) {
             val pos = targetPos.add(
                 rand.nextInt(8) - rand.nextInt(8),
                 rand.nextInt(4) - rand.nextInt(4),
@@ -54,19 +54,16 @@ class WorldGenFerns : AbstractGrassGenerator() {
     private fun placeFern(world: World, pos: BlockPos, rand: Random) {
         val startingAge = rand.nextInt(ModBlocks.blockTallFern.maxAge)
         val state = ModBlocks.blockTallFern.defaultState.withProperty(ModBlocks.blockTallFern.ageProperty, startingAge)
-        val maxState = ModBlocks.blockTallFern.defaultState.withProperty(
-            ModBlocks.blockTallFern.ageProperty,
-            ModBlocks.blockTallFern.maxAge
-        )
+        val maxState = ModBlocks.blockTallFern.defaultState.withProperty(ModBlocks.blockTallFern.ageProperty, ModBlocks.blockTallFern.maxAge)
 
         if (ModBlocks.blockTallFern.canBlockStay(world, pos, state)) {
-            world.setBlockState(pos, state, 3)
+            world.setBlockState(pos, state, 2)
 
             if (rand.nextDouble() < 0.2) {
-                world.setBlockState(pos, maxState, 3)
+                world.setBlockState(pos, maxState, 2)
 
                 if (world.isAirBlock(pos.up()) && ModBlocks.blockTallFern.canBlockStay(world, pos.up(), state)) {
-                    world.setBlockState(pos.up(), state, 3)
+                    world.setBlockState(pos.up(), state, 2)
                 }
             }
         }

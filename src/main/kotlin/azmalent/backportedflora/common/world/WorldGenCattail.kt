@@ -65,7 +65,7 @@ class WorldGenCattail : IWorldGenerator {
         val state = ModBlocks.blockCattail.defaultState.withProperty(ModBlocks.blockCattail.ageProperty, startingAge)
 
         if (ModBlocks.blockCattail.canBlockStay(world, pos, state)) {
-            world.setBlockState(pos, state)
+            world.setBlockState(pos, state, 2)
         }
     }
 }
